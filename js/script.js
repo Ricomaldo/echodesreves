@@ -2,98 +2,79 @@
 const SHEET_ID = "1I-K-gzyfC2kKemyDVMk4XdySBWFXD5Fohp1FrtXCsIQ";
 const API_KEY = "AIzaSyDO4nSbdDsfTy-F8KEOlodyhQRYBAJmYNM";
 
-// URL pour récupérer les sessions
+// URL pour récupérer les sessions et objectifs
 const SESSION_URL = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Sessions?key=${API_KEY}`;
-
+const OBJECTIVE_URL = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Objectifs?key=${API_KEY}`;
 
 // Fonction pour récupérer les sessions depuis Google Sheets
 async function fetchSessions() {
     try {
         const response = await fetch(SESSION_URL);
         const data = await response.json();
-        
-        // Vérifier si les données sont bien récupérées
+
         if (!data.values) {
-            console.error("Erreur : Aucune donnée récupérée");
+            console.error("Erreur : Aucune donnée récupérée pour les sessions");
             return [];
         }
-        
-        console.log("Données récupérées : ", data.values); // Affiche les données récupérées dans la console
-        return data.values; // Retourner les valeurs des sessions récupérées
+
+        return data.values;
     } catch (error) {
-        console.error("Erreur lors de la récupération des données : ", error);
+        console.error("Erreur lors de la récupération des sessions : ", error);
     }
 }
-
-// Fonction pour afficher les sessions dans le DOM, filtrées par personne
-function displaySessions(sessions, person, containerClass) {
-    const sessionContainer = document.querySelector(containerClass);
-    sessionContainer.innerHTML = ''; // Vider le contenu existant
-    
-    // Filtrer et afficher les sessions de la personne spécifiée
-    sessions.forEach(session => {
-        if (session[3] === person) { // La colonne 3 est celle qui contient la "Personne"
-            const sessionCard = document.createElement('div');
-            sessionCard.classList.add('card', 'session-card');
-            sessionCard.innerHTML = `
-                <h3>${session[0]} - ${session[1]}</h3>
-                <p>Status: ${session[1]}</p>
-                <p>Notes: ${session[2]}</p>
-                <button>Prendre des Notes</button>
-            `;
-            sessionContainer.appendChild(sessionCard);
-        }
-    });
-}
-
-// Récupérer et afficher les sessions pour "Eric"
-fetchSessions().then(sessions => {
-    displaySessions(sessions, "Eric", ".sessions-eric"); // Filtrer et afficher les sessions d'Eric
-});
-
-// Récupérer et afficher les sessions pour "Jezabel"
-fetchSessions().then(sessions => {
-    displaySessions(sessions, "Jezabel", ".sessions-jezabel"); // Filtrer et afficher les sessions de Jezabel
-});
-
-// URL pour récupérer les objectifs (avec la bonne clé API)
-const OBJECTIVE_URL = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Objectifs?key=${API_KEY}`;
 
 // Fonction pour récupérer les objectifs depuis Google Sheets
 async function fetchObjectives() {
     try {
         const response = await fetch(OBJECTIVE_URL);
         const data = await response.json();
-        
-        // Vérifier si les données sont bien récupérées
+
         if (!data.values) {
             console.error("Erreur : Aucune donnée récupérée pour les objectifs");
             return [];
         }
-        
-        console.log("Données des objectifs récupérées : ", data.values); // Affiche les données récupérées dans la console
-        return data.values; // Retourner les valeurs des objectifs récupérées
+
+        return data.values;
     } catch (error) {
         console.error("Erreur lors de la récupération des objectifs : ", error);
     }
 }
 
-// Fonction pour afficher les objectifs dans le DOM
+// Fonction pour afficher les sessions
+function displaySessions(sessions, person, containerClass) {
+    const sessionContainer = document.querySelector(`${containerClass} .session-content`);
+    sessionContainer.innerHTML = '';
+
+    sessions.forEach(session => {
+        if (session[3] === person) {
+            const sessionCard = document.createElement('div');
+            sessionCard.classList.add('card', 'session-card');
+            sessionCard.innerHTML = `
+                <h3>${session[0]} - ${session[1]}</h3>
+                <p>Status: ${session[1]}</p>
+                <p>Notes: ${session[2] || "Pas encore de notes"}</p>
+                <button onclick="takeNotes('${session[0]}')">Prendre des Notes</button>
+            `;
+            sessionContainer.appendChild(sessionCard);
+        }
+    });
+}
+
+// Fonction pour afficher les objectifs
 function displayObjectives(objectives, person, containerClass) {
-    const objectiveContainer = document.querySelector(containerClass);
-    objectiveContainer.innerHTML = ''; // Vider le contenu existant
-    
-    // Filtrer et afficher les objectifs de la personne spécifiée
+    const objectiveContainer = document.querySelector(`${containerClass} .objectif-content`);
+    objectiveContainer.innerHTML = '';
+
     objectives.forEach(objective => {
-        if (objective[4] === person) { // La colonne 4 est celle qui contient la "Personne"
+        if (objective[4] === person) {
             const objectiveCard = document.createElement('div');
             objectiveCard.classList.add('card', 'objectif-card');
             objectiveCard.innerHTML = `
-                <h3>${objective[0]}</h3> <!-- Nom de l'objectif -->
-                <p>Priorité: ${objective[1]}</p> <!-- Priorité -->
-                <p>Statut: ${objective[3]}</p> <!-- Statut -->
+                <h3>${objective[0]}</h3>
+                <p>Priorité: ${objective[1]}</p>
+                <p>Statut: ${objective[3]}</p>
                 <div class="progress-bar">
-                    <div class="progress" style="width: ${objective[2]}%;">${objective[2]}%</div> <!-- Progression -->
+                    <div class="progress" style="width: ${objective[2]}%;">${objective[2]}%</div>
                 </div>
                 <button>Marquer comme Terminé</button>
             `;
@@ -102,12 +83,43 @@ function displayObjectives(objectives, person, containerClass) {
     });
 }
 
-// Récupérer et afficher les objectifs pour "Eric"
-fetchObjectives().then(objectives => {
-    displayObjectives(objectives, "Eric", ".objectifs-eric"); // Filtrer et afficher les objectifs d'Eric
+// Fonction pour prendre des notes
+function takeNotes(sessionName) {
+    const notes = prompt(`Prendre des notes pour ${sessionName}:`);
+    if (notes) {
+        console.log(`Notes pour ${sessionName} : ${notes}`);
+        // Intégration avec Google Sheets à faire ici
+    }
+}
+
+// Ajouter de nouvelles sessions et objectifs (logique basique pour le moment)
+document.getElementById('add-session-eric').addEventListener('click', () => {
+    alert('Ajouter une nouvelle session pour Eric');
+    // Logique d'ajout de session ici
 });
 
-// Récupérer et afficher les objectifs pour "Jezabel"
+document.getElementById('add-session-jezabel').addEventListener('click', () => {
+    alert('Ajouter une nouvelle session pour Jezabel');
+    // Logique d'ajout de session ici
+});
+
+document.getElementById('add-objectif-eric').addEventListener('click', () => {
+    alert('Ajouter un nouvel objectif pour Eric');
+    // Logique d'ajout d’objectif ici
+});
+
+document.getElementById('add-objectif-jezabel').addEventListener('click', () => {
+    alert('Ajouter un nouvel objectif pour Jezabel');
+    // Logique d'ajout d’objectif ici
+});
+
+// Récupérer et afficher les sessions et objectifs
+fetchSessions().then(sessions => {
+    displaySessions(sessions, "Eric", ".sessions-eric");
+    displaySessions(sessions, "Jezabel", ".sessions-jezabel");
+});
+
 fetchObjectives().then(objectives => {
-    displayObjectives(objectives, "Jezabel", ".objectifs-jezabel"); // Filtrer et afficher les objectifs de Jezabel
+    displayObjectives(objectives, "Eric", ".objectifs-eric");
+    displayObjectives(objectives, "Jezabel", ".objectifs-jezabel");
 });
