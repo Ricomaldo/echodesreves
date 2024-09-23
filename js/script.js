@@ -6,6 +6,13 @@ const API_KEY = "AIzaSyDO4nSbdDsfTy-F8KEOlodyhQRYBAJmYNM";
 const SESSION_URL = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Sessions?key=${API_KEY}`;
 const OBJECTIVE_URL = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Objectifs?key=${API_KEY}`;
 
+// URL pour ajouter des sessions et objectifs
+const SESSION_APPEND_URL = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Sessions!A:D:append?valueInputOption=USER_ENTERED&key=${API_KEY}`;
+const OBJECTIVE_APPEND_URL = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Objectifs!A:E:append?valueInputOption=USER_ENTERED&key=${API_KEY}`;
+
+// URL pour mettre à jour les notes dans la feuille Google Sheets
+const SESSION_UPDATE_URL = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Sessions!A1:D100:batchUpdate?valueInputOption=USER_ENTERED&key=${API_KEY}`;
+
 // Fonction pour récupérer les sessions depuis Google Sheets
 async function fetchSessions() {
     try {
@@ -60,7 +67,7 @@ function displaySessions(sessions, person, containerClass) {
     });
 }
 
-// Fonction pour afficher les objectifs
+// Fonction pour afficher les objectifs avec gestion du pourcentage et marquer comme terminé
 function displayObjectives(objectives, person, containerClass) {
     const objectiveContainer = document.querySelector(`${containerClass} .objectif-content`);
     objectiveContainer.innerHTML = '';
@@ -70,40 +77,138 @@ function displayObjectives(objectives, person, containerClass) {
             const objectiveCard = document.createElement('div');
             objectiveCard.classList.add('card', 'objectif-card');
             objectiveCard.innerHTML = `
-                <h3>${objective[0]}</h3>
-                <p>Priorité: ${objective[1]}</p>
-                <p>Statut: ${objective[3]}</p>
-                <div class="progress-bar">
-                    <div class="progress" style="width: ${objective[2]}%;">${objective[2]}%</div>
-                </div>
-                <button>Marquer comme Terminé</button>
-            `;
+    <h3>${objective[0]}</h3>
+    <p>Priorité: ${objective[1]}</p>
+    <p>Statut: ${objective[3]}</p>
+    <div class="progress-bar">
+        <div class="progress" style="width: ${parseInt(objective[2], 10)}%;">
+            ${parseInt(objective[2], 10)}% <!-- Afficher le pourcentage -->
+        </div>
+    </div>
+    <button onclick="markAsCompleted('${objective[0]}', '${person}')">Marquer comme Terminé</button>
+`;
+
             objectiveContainer.appendChild(objectiveCard);
         }
     });
 }
 
-// Fonction pour prendre des notes
+let currentSessionName = ""; // Pour stocker le nom de la session pour laquelle on prend des notes
+
 function takeNotes(sessionName) {
-    const notes = prompt(`Prendre des notes pour ${sessionName}:`);
+    currentSessionName = sessionName; // Stocker le nom de la session pour soumettre les notes
+    openModal('modal-notes'); // Ouvrir la modal pour prendre des notes
+}
+
+// Fonction pour soumettre les notes
+async function submitNotes() {
+    const notes = document.getElementById('notes-text').value;
+
     if (notes) {
-        console.log(`Notes pour ${sessionName} : ${notes}`);
-        // Intégration avec Google Sheets à faire ici
+        const sessions = await fetchSessions();
+        const sessionIndex = sessions.findIndex(session => session[0] === currentSessionName);
+
+        if (sessionIndex !== -1) {
+            const row = sessionIndex + 1;
+            const notesCell = `C${row}`;
+
+            const updatePayload = {
+                "valueInputOption": "USER_ENTERED",
+                "data": [
+                    {
+                        "range": `Sessions!${notesCell}`,
+                        "values": [[notes]]
+                    }
+                ]
+            };
+
+            try {
+                const response = await fetch(SESSION_UPDATE_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(updatePayload)
+                });
+
+                if (response.ok) {
+                    alert(`Notes pour ${currentSessionName} enregistrées avec succès.`);
+                    closeModal('modal-notes');
+                    fetchSessions().then(sessions => {
+                        displaySessions(sessions, "Eric", ".sessions-eric");
+                        displaySessions(sessions, "Jezabel", ".sessions-jezabel");
+                    });
+                } else {
+                    document.getElementById('notes-error').style.display = "block";
+                }
+            } catch (error) {
+                document.getElementById('notes-error').style.display = "block";
+            }
+        }
     }
 }
 
-// URL pour ajouter des sessions
-const SESSION_APPEND_URL = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Sessions!A:D:append?valueInputOption=USER_ENTERED&key=${API_KEY}`;
+// Fonction pour marquer un objectif comme terminé
+// Fonction pour marquer un objectif comme terminé
+async function markAsCompleted(objectiveName, person) {
+    const updatedObjective = [[objectiveName, "Haute", "100%", "Terminé", person]];
 
-// URL pour ajouter des objectifs
-const OBJECTIVE_APPEND_URL = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Objectifs!A:E:append?valueInputOption=USER_ENTERED&key=${API_KEY}`;
+    try {
+        const response = await fetch(OBJECTIVE_APPEND_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                values: updatedObjective
+            })
+        });
 
-// Fonction pour ajouter une session à Google Sheets depuis le formulaire modal
-async function addSession() {
+        if (response.ok) {
+            alert(`L'objectif "${objectiveName}" a été marqué comme terminé.`);
+            // Actualiser l'affichage des objectifs après la mise à jour
+            fetchObjectives().then(objectives => {
+                displayObjectives(objectives, "Eric", ".objectifs-eric");
+                displayObjectives(objectives, "Jezabel", ".objectifs-jezabel");
+            });
+        } else {
+            console.error("Erreur lors de la mise à jour de l'objectif", await response.json());
+            alert("Erreur lors de la mise à jour de l'objectif");
+        }
+    } catch (error) {
+        console.error("Erreur lors de la mise à jour de l'objectif", error);
+    }
+}
+
+
+// Fonction pour mettre à jour la progression d'un objectif
+async function updateProgress(objectiveName, person, newProgress) {
+    const updatedObjective = [[objectiveName, "Haute", `${newProgress}%`, "En cours", person]];
+
+    try {
+        const response = await fetch(OBJECTIVE_APPEND_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                values: updatedObjective
+            })
+        });
+
+        if (response.ok) {
+            alert(`L'objectif "${objectiveName}" a été mis à jour à ${newProgress}%`);
+        } else {
+            console.error("Erreur lors de la mise à jour de la progression", await response.json());
+        }
+    } catch (error) {
+        console.error("Erreur lors de la mise à jour de la progression", error);
+    }
+}
+
+// Fonction pour ajouter une session via le formulaire modal
+async function addSession(person) {
     const date = document.getElementById('session-date').value;
     const status = document.getElementById('session-status').value;
     const notes = document.getElementById('session-notes').value;
-    const person = "Eric"; // Personne à ajuster selon le formulaire
 
     if (date && status) {
         const newSession = [[date, status, notes || "", person]];
@@ -122,6 +227,10 @@ async function addSession() {
             if (response.ok) {
                 alert(`Session ajoutée pour ${person}`);
                 closeModal('modal-session');
+                fetchSessions().then(sessions => {
+                    displaySessions(sessions, "Eric", ".sessions-eric");
+                    displaySessions(sessions, "Jezabel", ".sessions-jezabel");
+                });
             } else {
                 console.error("Erreur lors de l'ajout de la session", await response.json());
                 alert("Erreur lors de l'ajout de la session");
@@ -134,16 +243,15 @@ async function addSession() {
     }
 }
 
-// Fonction pour ajouter un objectif à Google Sheets depuis le formulaire modal
-async function addObjective() {
+// Fonction pour ajouter un objectif via le formulaire modal
+async function addObjective(person) {
     const name = document.getElementById('objectif-name').value;
-    const priorite = document.getElementById('objectif-priority').value;
-    const progression = document.getElementById('objectif-progress').value;
-    const statut = document.getElementById('objectif-status').value;
-    const person = "Eric"; // Personne à ajuster selon le formulaire
+    const priority = document.getElementById('objectif-priority').value;
+    const progress = document.getElementById('objectif-progress').value;
+    const status = document.getElementById('objectif-status').value;
 
-    if (name && priorite && progression && statut && progression >= 0 && progression <= 100) {
-        const newObjective = [[name, priorite, `${progression}%`, statut, person]];
+    if (name && priority && progress && status && progress >= 0 && progress <= 100) {
+        const newObjective = [[name, priority, `${progress}%`, status, person]];
 
         try {
             const response = await fetch(OBJECTIVE_APPEND_URL, {
@@ -159,6 +267,10 @@ async function addObjective() {
             if (response.ok) {
                 alert(`Objectif ajouté pour ${person}`);
                 closeModal('modal-objectif');
+                fetchObjectives().then(objectives => {
+                    displayObjectives(objectives, "Eric", ".objectifs-eric");
+                    displayObjectives(objectives, "Jezabel", ".objectifs-jezabel");
+                });
             } else {
                 console.error("Erreur lors de l'ajout de l'objectif", await response.json());
                 alert("Erreur lors de l'ajout de l'objectif");
@@ -191,15 +303,81 @@ document.getElementById('close-modal-session').addEventListener('click', () => c
 document.getElementById('close-modal-objectif').addEventListener('click', () => closeModal('modal-objectif'));
 
 // Validation et soumission du formulaire de session
-document.getElementById('form-session').addEventListener('submit', function (event) {
+document.getElementById('form-session').addEventListener('submit', async function (event) {
     event.preventDefault();
-    addSession();
+
+    const date = document.getElementById('session-date').value;
+    const status = document.getElementById('session-status').value;
+    const notes = document.getElementById('session-notes').value;
+    const person = "Eric"; // Change si nécessaire
+
+    if (date && status) {
+        const newSession = [[date, status, notes || "", person]];
+
+        try {
+            const response = await fetch(SESSION_APPEND_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ values: newSession })
+            });
+
+            if (response.ok) {
+                alert("Session ajoutée !");
+                closeModal('modal-session');
+                fetchSessions().then(sessions => {
+                    displaySessions(sessions, "Eric", ".sessions-eric");
+                    displaySessions(sessions, "Jezabel", ".sessions-jezabel");
+                });
+            } else {
+                document.getElementById('session-error').innerText = "Erreur lors de l'ajout.";
+                document.getElementById('session-error').style.display = "block";
+            }
+        } catch (error) {
+            document.getElementById('session-error').innerText = "Erreur lors de l'envoi.";
+            document.getElementById('session-error').style.display = "block";
+        }
+    }
 });
 
 // Validation et soumission du formulaire d'objectif
-document.getElementById('form-objectif').addEventListener('submit', function (event) {
+document.getElementById('form-objectif').addEventListener('submit', async function (event) {
     event.preventDefault();
-    addObjective();
+
+    const name = document.getElementById('objectif-name').value;
+    const priority = document.getElementById('objectif-priority').value;
+    const progress = document.getElementById('objectif-progress').value;
+    const status = document.getElementById('objectif-status').value;
+    const person = "Eric"; // Change si nécessaire
+
+    if (name && priority && progress && status && progress >= 0 && progress <= 100) {
+        const newObjective = [[name, priority, `${progress}%`, status, person]];
+
+        try {
+            const response = await fetch(OBJECTIVE_APPEND_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ values: newObjective })
+            });
+
+            if (response.ok) {
+                alert("Objectif ajouté !");
+                closeModal('modal-objectif');
+                fetchObjectives().then(objectives => {
+                    displayObjectives(objectives, "Eric", ".objectifs-eric");
+                    displayObjectives(objectives, "Jezabel", ".objectifs-jezabel");
+                });
+            } else {
+                document.getElementById('objectif-error').innerText = "Erreur lors de l'ajout.";
+                document.getElementById('objectif-error').style.display = "block";
+            }
+        } catch (error) {
+            document.getElementById('objectif-error').innerText = "Erreur lors de l'envoi.";
+            document.getElementById('objectif-error').style.display = "block";
+        }
+    } else {
+        document.getElementById('objectif-error').innerText = "Veuillez vérifier les champs.";
+        document.getElementById('objectif-error').style.display = "block";
+    }
 });
 
 // Récupérer et afficher les sessions et objectifs

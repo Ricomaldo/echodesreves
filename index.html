@@ -97,6 +97,18 @@
         </div>
     </div>
 
+    <!-- Modale pour la prise de notes -->
+    <div id="modal-notes" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('modal-notes')">&times;</span>
+            <h3>Prendre des notes</h3>
+            <textarea id="notes-text" placeholder="Écrivez vos notes ici..."></textarea>
+            <button onclick="submitNotes()">Enregistrer les notes</button>
+            <button onclick="closeModal('modal-notes')">Fermer</button>
+            <p id="notes-error" style="display:none; color:red;">Erreur lors de l'enregistrement.</p>
+        </div>
+    </div>
+
     <footer>
         <p>© 2024 L'écho des rêves</p>
     </footer>

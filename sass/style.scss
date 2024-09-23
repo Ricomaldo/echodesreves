@@ -37,7 +37,6 @@ header {
     background-color: $main-color;
     color: white;
     border-radius: 8px;
-    h1 {color: $background-color}
 }
 
 // Main sections styling
@@ -108,17 +107,20 @@ button:hover {
     border-radius: 5px;
     overflow: hidden;
     position: relative;
-    height: 20px;
+    height: 30px; /* Augmenter la hauteur */
     margin-top: 10px;
+    transition: background-color 0.3s ease; /* Transition pour la couleur de fond */
 }
 
 .progress {
-    background-color: $main-color;
+    background: linear-gradient(90deg, $main-color, $accent-color); /* Dégradé */
     height: 100%;
     color: white;
     text-align: center;
-    line-height: 20px;
+    line-height: 30px; /* Centrer le texte verticalement */
+    transition: width 0.5s ease; /* Animation de changement de largeur */
 }
+
 
 // Session and objective sections for Eric and Jezabel
 .sessions-eric, .objectifs-eric {
@@ -129,7 +131,7 @@ button:hover {
     border-left: 4px solid $accent-color;
 }
 
-/* Styles de base pour les modaux */
+// Styles de base pour les modaux
 .modal {
     display: none; /* Caché par défaut */
     position: fixed;

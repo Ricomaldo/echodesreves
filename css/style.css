@@ -28,9 +28,6 @@ header {
   color: white;
   border-radius: 8px;
 }
-header h1 {
-  color: #F5F5F5;
-}
 
 main {
   display: flex;
@@ -96,16 +93,18 @@ button:hover {
   border-radius: 5px;
   overflow: hidden;
   position: relative;
-  height: 20px;
+  height: 30px; /* Augmenter la hauteur */
   margin-top: 10px;
+  transition: background-color 0.3s ease; /* Transition pour la couleur de fond */
 }
 
 .progress {
-  background-color: #017374;
+  background: linear-gradient(90deg, #017374, #FFA726); /* Dégradé */
   height: 100%;
   color: white;
   text-align: center;
-  line-height: 20px;
+  line-height: 30px; /* Centrer le texte verticalement */
+  transition: width 0.5s ease; /* Animation de changement de largeur */
 }
 
 .sessions-eric, .objectifs-eric {
@@ -116,7 +115,6 @@ button:hover {
   border-left: 4px solid #FFA726;
 }
 
-/* Styles de base pour les modaux */
 .modal {
   display: none; /* Caché par défaut */
   position: fixed;
