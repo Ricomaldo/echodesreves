@@ -1,0 +1,108 @@
+// Variables for colors
+$main-color: #017374;      // Bleu canard
+$accent-color: #FFA726;    // Orange doux
+$background-color: #F5F5F5; // Blanc cassé
+$neutral-color: #E0E0E0;   // Gris clair
+$text-color: #333;
+$highlight-color: #FFD54F; // Jaune doré
+
+// General reset
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+// Body styling
+body {
+    font-family: 'Raleway', sans-serif;
+    background-color: $background-color;
+    color: $text-color;
+    padding: 20px;
+    line-height: 1.6;
+}
+
+h1, h2 {
+    color: $main-color;
+}
+
+// Header styling
+header {
+    text-align: center;
+    padding: 10px;
+    background-color: $main-color;
+    color: white;
+    border-radius: 8px;
+    h1 {
+        color: $background-color; // Forcer le h1 à être ivoire
+    }
+}
+
+// Main sections
+main {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+section {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+// Cards
+.card {
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.session-card, .objectif-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+// Button styles
+button {
+    background-color: $accent-color;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: darken($accent-color, 10%);
+}
+
+.add-session-btn, .add-objectif-btn {
+    margin-top: 15px;
+    width: 100%;
+    text-align: center;
+}
+
+// Progress bar styles
+.progress-bar {
+    background-color: $neutral-color;
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+    height: 20px;
+    margin-top: 10px;
+}
+
+.progress {
+    background-color: $main-color;
+    height: 100%;
+    color: white;
+    text-align: center;
+    line-height: 20px;
+}
