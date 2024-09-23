@@ -11,15 +11,18 @@ $highlight-color: #FFD54F; // Jaune doré
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    font-family: 'Raleway', sans-serif;
 }
 
 // Body styling
 body {
-    font-family: 'Raleway', sans-serif;
     background-color: $background-color;
     color: $text-color;
     padding: 20px;
     line-height: 1.6;
+    display: flex;
+    flex-direction: column; /* Place les éléments verticalement */
+    align-items: center; /* Centrer horizontalement les éléments */
 }
 
 h1, h2 {
@@ -33,16 +36,16 @@ header {
     background-color: $main-color;
     color: white;
     border-radius: 8px;
-    h1 {
-        color: $background-color; // Forcer le h1 à être ivoire
-    }
+    h1 {color: $background-color}
 }
 
-// Main sections
+// Main sections styling
 main {
     display: flex;
     flex-direction: column;
     gap: 30px;
+    width: 100%;
+    max-width: 1200px;
 }
 
 section {
@@ -52,9 +55,9 @@ section {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-// Cards
+// Card styles
 .card {
-    background-color: #ffffff;
+    background-color: white;
     padding: 15px;
     border-radius: 8px;
     margin-bottom: 20px;
@@ -83,12 +86,6 @@ button:hover {
     background-color: darken($accent-color, 10%);
 }
 
-.add-session-btn, .add-objectif-btn {
-    margin-top: 15px;
-    width: 100%;
-    text-align: center;
-}
-
 // Progress bar styles
 .progress-bar {
     background-color: $neutral-color;
@@ -105,4 +102,13 @@ button:hover {
     color: white;
     text-align: center;
     line-height: 20px;
+}
+
+// Session and objective sections for Eric and Jezabel
+.sessions-eric, .objectifs-eric {
+    border-left: 4px solid $main-color;
+}
+
+.sessions-jezabel, .objectifs-jezabel {
+    border-left: 4px solid $accent-color;
 }

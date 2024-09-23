@@ -2,14 +2,16 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: "Raleway", sans-serif;
 }
 
 body {
-  font-family: "Raleway", sans-serif;
   background-color: #F5F5F5;
   color: #333;
   padding: 20px;
   line-height: 1.6;
+  display: flex;
+  justify-content: center;
 }
 
 h1, h2 {
@@ -23,14 +25,13 @@ header {
   color: white;
   border-radius: 8px;
 }
-header h1 {
-  color: #F5F5F5;
-}
 
 main {
   display: flex;
   flex-direction: column;
   gap: 30px;
+  width: 100%;
+  max-width: 1200px;
 }
 
 section {
@@ -41,7 +42,7 @@ section {
 }
 
 .card {
-  background-color: #ffffff;
+  background-color: white;
   padding: 15px;
   border-radius: 8px;
   margin-bottom: 20px;
@@ -69,12 +70,6 @@ button:hover {
   background-color: #f29000;
 }
 
-.add-session-btn, .add-objectif-btn {
-  margin-top: 15px;
-  width: 100%;
-  text-align: center;
-}
-
 .progress-bar {
   background-color: #E0E0E0;
   border-radius: 5px;
@@ -90,4 +85,12 @@ button:hover {
   color: white;
   text-align: center;
   line-height: 20px;
+}
+
+.sessions-eric, .objectifs-eric {
+  border-left: 4px solid #017374;
+}
+
+.sessions-jezabel, .objectifs-jezabel {
+  border-left: 4px solid #FFA726;
 }/*# sourceMappingURL=style.css.map */
