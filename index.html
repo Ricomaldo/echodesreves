@@ -42,6 +42,61 @@
         </section>
     </main>
 
+    <!-- Modal pour ajouter une session -->
+    <div id="modal-session" class="modal">
+        <div class="modal-content">
+            <span class="close" id="close-modal-session">&times;</span>
+            <h2>Ajouter une session</h2>
+            <form id="form-session">
+                <label for="session-date">Date :</label>
+                <input type="date" id="session-date" name="session-date" required>
+
+                <label for="session-status">Statut :</label>
+                <select id="session-status" name="session-status" required>
+                    <option value="À venir">À venir</option>
+                    <option value="Terminée">Terminée</option>
+                </select>
+
+                <label for="session-notes">Notes :</label>
+                <textarea id="session-notes" name="session-notes"></textarea>
+
+                <input type="submit" value="Ajouter la session">
+            </form>
+            <p id="session-error" class="error-message"></p>
+        </div>
+    </div>
+
+    <!-- Modal pour ajouter un objectif -->
+    <div id="modal-objectif" class="modal">
+        <div class="modal-content">
+            <span class="close" id="close-modal-objectif">&times;</span>
+            <h2>Ajouter un objectif</h2>
+            <form id="form-objectif">
+                <label for="objectif-name">Nom de l'objectif :</label>
+                <input type="text" id="objectif-name" name="objectif-name" required>
+
+                <label for="objectif-priority">Priorité :</label>
+                <select id="objectif-priority" name="objectif-priority" required>
+                    <option value="Haute">Haute</option>
+                    <option value="Moyenne">Moyenne</option>
+                    <option value="Basse">Basse</option>
+                </select>
+
+                <label for="objectif-progress">Progression (%) :</label>
+                <input type="number" id="objectif-progress" name="objectif-progress" min="0" max="100" required>
+
+                <label for="objectif-status">Statut :</label>
+                <select id="objectif-status" name="objectif-status" required>
+                    <option value="En cours">En cours</option>
+                    <option value="Terminé">Terminé</option>
+                </select>
+
+                <input type="submit" value="Ajouter l'objectif">
+            </form>
+            <p id="objectif-error" class="error-message"></p>
+        </div>
+    </div>
+
     <footer>
         <p>© 2024 L'écho des rêves</p>
     </footer>
