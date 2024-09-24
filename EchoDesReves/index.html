@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L'écho des rêves</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="images/logo/plume_favicon.png">
+    
+</head>
+<body>
+    <header>
+        <a href="index.html"><h1>L'écho des rêves</h1></a>
+    </header>
+
+    <main>
+        <div class="tabs">
+            <button class="tab-btn" onclick="openTab(event, 'jezabel')">Jezabel</button>
+            <button class="tab-btn" onclick="openTab(event, 'eric')">Eric</button>
+        </div>
+        <div id="jezabel" class="tab-content">
+            <section class="objectifs-jezabel">
+              <h2>Mes objectifs</h2>
+              <div class="objectif-content"></div>
+            </section>
+
+            <section class="sessions-jezabel">
+                <h2>Mes sessions</h2>
+                <div class="session-content"></div>
+            </section>
+        </div>
+        <div id="eric" class="tab-content">
+            <section class="objectifs-eric">
+              <h2>Mes objectifs</h2>
+              <div class="objectif-content"></div>
+            </section>
+
+            <section class="sessions-eric">
+                <h2>Mes sessions</h2>
+                <div class="session-content"></div>
+            </section>
+        </div>
+        <div class="nav">
+            <button class="nav-btn">Coaching</button>
+            <button class="nav-btn">Progression</button> 
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2024 L'écho des rêves</p>
+        <a href="test-firebase.html">le test d'écriture sur firebase</a>
+    </footer>
+
+    <script src="js/opentab.js"></script>
+</body>
+</html>

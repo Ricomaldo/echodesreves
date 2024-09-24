@@ -1,0 +1,132 @@
+// Variables for colors
+$main-color: #017374;      // Bleu canard
+$accent-color: #FFA726;    // Orange doux
+$background-color: #F5F5F5; // Blanc cassé
+$neutral-color: #E0E0E0;   // Gris clair
+$text-color: #333;
+$highlight-color: #FFD54F; // Jaune doré
+
+// General reset
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Raleway', sans-serif;
+}
+
+// Body styling
+body {
+    background-color: $background-color;
+    color: $text-color;
+    padding: 20px;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+h1, h2 {
+    color: $main-color;
+}
+
+// Header styling
+header {
+    text-align: center;
+    padding: 10px;
+    background-color: $main-color;
+    color: white;
+    border-radius: 12px;
+    h1 { color: $background-color; }
+}
+
+// Main sections styling
+main {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 1200px;
+}
+
+// Onglets styles
+.tabs {
+    display: flex;
+    justify-content: center;
+}
+
+.tab-btn {
+    background-color: $main-color;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: background-color 0.3s ease;
+    margin: 0 10px;
+    border-radius: 12px 12px 0 0;
+}
+
+.tab-btn:hover {
+    background-color: darken($main-color, 10%);
+}
+
+.tab-btn.active {
+    background-color: $accent-color;
+}
+
+.tab-content {
+    display: none; // Caché par défaut
+    background-color: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.tab-content.active {
+    display: block; // Afficher quand actif
+}
+
+// Sections styling
+.sessions-eric, .objectifs-eric {
+    border-left: 4px solid $main-color;
+}
+
+.sessions-jezabel, .objectifs-jezabel {
+    border-left: 4px solid $accent-color;
+}
+
+.nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap:15px;
+    margin-top:30px;
+}
+
+.nav-btn {
+    background-color: white;
+    color:$main-color;
+    font-weight: bold;
+    padding:5px;
+    width:60%;   
+    font-size: 1.2rem;
+    transition: background-color 0.3s ease;
+    margin: 0 10px;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+// Card styles
+.card {
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.session-card, .objectif-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}

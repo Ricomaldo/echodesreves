@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Test Firebase</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="images/logo/plume_favicon.png">
+</head>
+
+<body>
+  <h3>Ajouter une note de test dans Firebase</h3>
+  <form id="testForm">
+    <input type="text" id="testInput" placeholder="Votre note" required />
+    <button type="submit">Envoyer</button>
+  </form>
+
+  <div id="output"></div>
+
+  <!-- Inclure Firebase via le bon CDN -->
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
+
+  <!-- Script de configuration Firebase -->
+  <script>
+    // Configuration Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyAMRZ9XTk2tQ0erwkH6Z6nsAY8mlJiJCyI",
+      authDomain: "echodesreves-55484.firebaseapp.com",
+      projectId: "echodesreves-55484",
+      storageBucket: "echodesreves-55484.appspot.com",
+      messagingSenderId: "1045743649044",
+      appId: "1:1045743649044:web:3cdca072730b9aad9ac201",
+      measurementId: "G-3GYJDXK5VR"
+    };
+
+    // Initialiser Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    // Initialiser Analytics
+    firebase.analytics();
+
+    // Initialiser Firestore
+    const db = firebase.firestore();
+
+    // Gérer la soumission du formulaire
+    document.getElementById('testForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const input = document.getElementById('testInput').value;
+
+      // Ajouter une nouvelle note dans Firestore
+      await db.collection("testCollection").add({
+        note: input,
+        timestamp: new Date()
+      });
+
+      // Récupérer et afficher les notes mises à jour
+      afficherNotes();
+    });
+
+    // Fonction pour afficher les notes avec un bouton de suppression
+    async function afficherNotes() {
+      const querySnapshot = await db.collection("testCollection").get();
+      const output = document.getElementById('output');
+      output.innerHTML = "";
+      querySnapshot.forEach((doc) => {
+        const note = doc.data().note;
+        const noteId = doc.id;  // Récupère l'ID du document
+        
+        // Crée une ligne pour chaque note avec un bouton de suppression
+        output.innerHTML += `
+          <p>${note} <button onclick="supprimerNote('${noteId}')">Supprimer</button></p>
+        `;
+      });
+    }
+
+    // Fonction pour supprimer une note
+    async function supprimerNote(id) {
+      try {
+        await db.collection("testCollection").doc(id).delete();
+        console.log(`Note avec ID ${id} supprimée avec succès.`);
+        
+        // Réafficher les notes après suppression
+        afficherNotes();
+      } catch (error) {
+        console.error("Erreur lors de la suppression de la note : ", error);
+      }
+    }
+
+    // Afficher les notes au chargement de la page
+    afficherNotes();
+  </script>
+
+</body>
+</html>
