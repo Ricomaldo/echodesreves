@@ -30,6 +30,9 @@ header {
 header h1 {
   color: #F5F5F5;
 }
+header a {
+  text-decoration: none;
+}
 
 main {
   display: flex;
@@ -102,6 +105,8 @@ main {
   margin: 0 10px;
   border-radius: 12px;
   cursor: pointer;
+  text-decoration: none;
+  text-align: center;
 }
 
 .card {

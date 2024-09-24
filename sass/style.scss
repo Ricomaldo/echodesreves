@@ -38,6 +38,7 @@ header {
     color: white;
     border-radius: 12px;
     h1 { color: $background-color; }
+    a {text-decoration: none;}
 }
 
 // Main sections styling
@@ -114,7 +115,10 @@ main {
     margin: 0 10px;
     border-radius: 12px;
     cursor: pointer;
+    text-decoration: none;
+    text-align: center;
 }
+
 
 // Card styles
 .card {

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coaching - L'écho des rêves</title>
+    <link rel="preload" href="css/style.css" as="style" onload="this.rel='stylesheet'">
+</head>
+
+<body>
+    <h1>Page Coaching</h1>
+
+    <!-- Bloc pour sélectionner la personne -->
+    <div class="coaching-select">
+        <label for="participant-select">Participant :</label>
+        <select id="participant-select">
+            <option value="eric">Eric</option>
+            <option value="jezabel">Jezabel</option>
+        </select>
+    </div>
+
+    <!-- Bloc pour sélectionner la date de la session -->
+    <div class="coaching-select">
+        <label for="date-select">Date de session :</label>
+        <select id="date-select">
+            <!-- Options dynamiques insérées via JS -->
+        </select>
+    </div>
+
+    <!-- Sous-bloc pour la prise de notes -->
+    <div class="note-editor">
+        <h2>Prise de notes</h2>
+        <textarea id="notes-textarea" rows="10" cols="50" placeholder="Vos notes ici..."></textarea>
+        <!-- Bouton pour sauvegarder les notes -->
+        <button id="save-notes">Sauvegarder les notes</button>
+    </div>
+
+    <!-- Sous-bloc Objectifs -->
+    <div class="objectifs">
+        <h2>Objectifs</h2>
+        <div id="objectif-content"></div>
+    </div>
+
+    <!-- Scripts pour Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
+
+    <script src="js/firebaseConfig.js"></script>
+    <script>
+        // S'assurer que le DOM est chargé avant d'exécuter le code
+        document.addEventListener('DOMContentLoaded', function () {
+            const participantSelect = document.getElementById('participant-select');
+            const dateSelect = document.getElementById('date-select');
+            const notesTextarea = document.getElementById('notes-textarea');
+
+            // Fonction pour charger les dates de sessions
+            function chargerDates() {
+                const participant = participantSelect.value === "eric" ? "Eric" : "Jezabel"; // Adapter la casse
+                console.log("Participant sélectionné :", participant);
+
+                dateSelect.innerHTML = ''; // Réinitialiser les options
+
+                db.collection("Sessions").where("participant", "==", participant)
+                    .get()
+                    .then(querySnapshot => {
+                        if (querySnapshot.empty) {
+                            console.log("Aucune session trouvée pour :", participant);
+                        } else {
+                            console.log("Sessions trouvées pour :", participant);
+                            querySnapshot.forEach(doc => {
+                                const session = doc.data();
+                                console.log("Session data :", session);
+
+                                // Vérifie que le champ 'date' est bien un timestamp
+                                if (session.date && session.date.seconds) {
+                                    const option = document.createElement('option');
+                                    option.value = doc.id;
+                                    option.textContent = new Date(session.date.seconds * 1000).toLocaleDateString();
+                                    dateSelect.appendChild(option); // Ajouter l'option
+                                } else {
+                                    console.error("Le champ 'date' n'est pas un timestamp valide :", session.date);
+                                }
+                            });
+
+                            // Forcer la sélection de la première option pour déclencher le chargement des notes
+                            if (dateSelect.options.length > 0) {
+                                dateSelect.selectedIndex = 0;
+                                chargerNotes(); // Charger les notes de la première session sélectionnée
+                            }
+                        }
+                    }).catch(error => {
+                        console.error("Erreur lors du chargement des sessions :", error);
+                    });
+            }
+
+            // Fonction pour charger les notes existantes d'une session
+            function chargerNotes() {
+                console.log("Tentative de chargement des notes...");
+                const sessionId = dateSelect.value;
+                console.log("Session sélectionnée :", sessionId);
+
+                if (!sessionId) return;
+
+                db.collection("Sessions").doc(sessionId).get().then((doc) => {
+                    if (doc.exists) {
+                        const sessionData = doc.data();
+                        console.log("Notes chargées :", sessionData.notes);
+
+                        // Charger les notes existantes dans le textarea
+                        notesTextarea.value = sessionData.notes || "";
+                    } else {
+                        console.log("Aucune donnée trouvée pour la session sélectionnée.");
+                    }
+                }).catch(error => {
+                    console.error("Erreur lors du chargement des notes :", error);
+                });
+            }
+
+            // Fonction pour sauvegarder les notes mises à jour
+            function sauvegarderNotes() {
+                const sessionId = dateSelect.value;
+                if (!sessionId) return;
+
+                const notes = notesTextarea.value; // Récupérer le contenu du textarea
+
+                db.collection("Sessions").doc(sessionId).update({
+                    notes: notes
+                }).then(() => {
+                    console.log("Notes mises à jour !");
+                }).catch(error => {
+                    console.error("Erreur lors de la mise à jour des notes :", error);
+                });
+            }
+
+            // Charger les dates et les notes quand un participant ou une date est sélectionné
+            participantSelect.addEventListener('change', chargerDates);
+            dateSelect.addEventListener('change', chargerNotes); // Charger les notes quand une date est sélectionnée
+
+            // Ajouter un bouton de sauvegarde
+            document.getElementById('save-notes').addEventListener('click', sauvegarderNotes);
+        });
+    </script>
+</body>
+
+</html>

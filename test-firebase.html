@@ -18,6 +18,13 @@
 
   <div id="output"></div>
 
+  <h3>Liste des objectifs</h3>
+  <div id="objectifs"></div>
+
+  <h3>Liste des sessions</h3>
+  <div id="sessions"></div>
+
+
   <!-- Inclure Firebase via le bon CDN -->
   <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-analytics.js"></script>
@@ -91,7 +98,42 @@
 
     // Afficher les notes au chargement de la page
     afficherNotes();
+
+     // Fonction pour convertir un timestamp Firestore en date lisible
+     function convertirTimestampEnDate(timestamp) {
+      const date = timestamp.toDate();
+      return date.toLocaleDateString();
+    }
+
+    // Fonction pour lire les objectifs
+    async function lireObjectifs() {
+      const objectifsRef = db.collection("Objectifs");
+      const objectifsSnapshot = await objectifsRef.get();
+      const objectifsDiv = document.getElementById('objectifs');
+      objectifsSnapshot.forEach((doc) => {
+        const objectif = doc.data();
+        objectifsDiv.innerHTML += `<p><strong>Titre :</strong> ${objectif.titre} | <strong>Progression :</strong> ${objectif.progression} | <strong>Participant :</strong> ${objectif.participant} | <strong>Description :</strong> ${objectif.description}</p>`;
+      });
+    }
+
+    // Fonction pour lire les sessions
+    async function lireSessions() {
+      const sessionsRef = db.collection("Sessions");
+      const sessionsSnapshot = await sessionsRef.get();
+      const sessionsDiv = document.getElementById('sessions');
+      sessionsSnapshot.forEach((doc) => {
+        const session = doc.data();
+        // Convertir le timestamp en une date lisible
+        const dateLisible = convertirTimestampEnDate(session.date);
+        sessionsDiv.innerHTML += `<p><strong>Date :</strong> ${dateLisible} | <strong>Lieu :</strong> ${session.lieu} | <strong>Participant :</strong> ${session.participant} | <strong>Notes :</strong> ${session.notes}</p>`;
+      });
+    }
+
+    // Appeler les fonctions pour lire les données
+    lireObjectifs();
+    lireSessions();
   </script>
+
 
 </body>
 </html>
