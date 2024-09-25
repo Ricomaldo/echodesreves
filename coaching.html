@@ -42,72 +42,133 @@
         <div id="objectif-content"></div>
     </div>
 
+    <!-- Sous-bloc pour les formulaires -->
+    <div class="formulaires">
+        <div class="form-section">
+            <h3>Ajouter un Objectif</h3>
+            <form id="add-objectif-form">
+                <label for="participant-objectif">Participant :</label>
+                <select id="participant-objectif" required>
+                    <option value="eric">Eric</option>
+                    <option value="jezabel">Jezabel</option>
+                </select>
+
+                <label for="titre-objectif">Titre :</label>
+                <input type="text" id="titre-objectif" placeholder="Titre de l'objectif" required>
+
+                <label for="description-objectif">Description :</label>
+                <textarea id="description-objectif" rows="3" placeholder="Description de l'objectif" required></textarea>
+
+                <label for="progression-objectif">Progression :</label>
+                <input type="number" id="progression-objectif" min="0" max="100" value="0" required>
+
+                <label for="deadline-objectif">Deadline :</label>
+                <input type="date" id="deadline-objectif" required>
+
+                <button type="submit">Ajouter Objectif</button>
+            </form>
+        </div>
+        <div class="form-section">
+            <h3>Ajouter une Session</h3>
+            <form id="add-session-form">
+                <label for="participant-session">Participant :</label>
+                <select id="participant-session" required>
+                    <option value="eric">Eric</option>
+                    <option value="jezabel">Jezabel</option>
+                </select>
+
+                <label for="lieu-session">Lieu :</label>
+                <input type="text" id="lieu-session" placeholder="Lieu de la session" required>
+
+                <label for="date-session">Date :</label>
+                <input type="date" id="date-session" required>
+
+                <label for="notes-session">Notes :</label>
+                <textarea id="notes-session" rows="3" placeholder="Notes de la session"></textarea>
+
+                <button type="submit">Ajouter Session</button>
+            </form>
+        </div>
+    </div>
+
     <!-- Scripts pour Firebase -->
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
 
     <script src="js/firebaseConfig.js"></script>
     <script>
-        // S'assurer que le DOM est chargé avant d'exécuter le code
         document.addEventListener('DOMContentLoaded', function () {
             const participantSelect = document.getElementById('participant-select');
             const dateSelect = document.getElementById('date-select');
             const notesTextarea = document.getElementById('notes-textarea');
+            const today = new Date().setHours(0, 0, 0, 0); // Date du jour sans heure
 
-            // Fonction pour charger les dates de sessions
+            // Fonction pour charger les dates de sessions avec gestion de la casse
             function chargerDates() {
-                const participant = participantSelect.value === "eric" ? "Eric" : "Jezabel"; // Adapter la casse
-                console.log("Participant sélectionné :", participant);
+                const participant = participantSelect.value === "eric" ? ["Eric", "eric"] : ["Jezabel", "jezabel"];
+                console.log("Participants sélectionnés :", participant);
 
                 dateSelect.innerHTML = ''; // Réinitialiser les options
 
-                db.collection("Sessions").where("participant", "==", participant)
-                    .get()
-                    .then(querySnapshot => {
-                        if (querySnapshot.empty) {
-                            console.log("Aucune session trouvée pour :", participant);
-                        } else {
-                            console.log("Sessions trouvées pour :", participant);
-                            querySnapshot.forEach(doc => {
-                                const session = doc.data();
-                                console.log("Session data :", session);
+                // Requête Firestore pour récupérer toutes les sessions pour les deux variantes de participant
+                const promises = [
+                    db.collection("Sessions").where("participant", "==", participant[0]).get(),
+                    db.collection("Sessions").where("participant", "==", participant[1]).get()
+                ];
 
-                                // Vérifie que le champ 'date' est bien un timestamp
-                                if (session.date && session.date.seconds) {
-                                    const option = document.createElement('option');
-                                    option.value = doc.id;
-                                    option.textContent = new Date(session.date.seconds * 1000).toLocaleDateString();
-                                    dateSelect.appendChild(option); // Ajouter l'option
-                                } else {
-                                    console.error("Le champ 'date' n'est pas un timestamp valide :", session.date);
-                                }
-                            });
+                Promise.all(promises)
+                    .then(querySnapshots => {
+                        let allSessions = [];
 
-                            // Forcer la sélection de la première option pour déclencher le chargement des notes
-                            if (dateSelect.options.length > 0) {
-                                dateSelect.selectedIndex = 0;
-                                chargerNotes(); // Charger les notes de la première session sélectionnée
+                        // Combiner les résultats des deux requêtes
+                        querySnapshots.forEach(querySnapshot => {
+                            allSessions = allSessions.concat(querySnapshot.docs);
+                        });
+
+                        let lastPastSessionIndex = -1; // Variable pour stocker l'index de la dernière session passée
+
+                        // Parcourir toutes les sessions (passées et futures)
+                        allSessions.forEach((doc, index) => {
+                            const session = doc.data();
+                            const sessionDate = doc.data().date.seconds * 1000;
+
+                            // Vérifier si la session est passée
+                            if (sessionDate <= today) {
+                                lastPastSessionIndex = index; // Stocker l'index de la dernière session passée
                             }
+
+                            // Ajouter l'option au menu déroulant
+                            if (session.date && session.date.seconds) {
+                                const option = document.createElement('option');
+                                option.value = doc.id;
+                                option.textContent = new Date(session.date.seconds * 1000).toLocaleDateString();
+                                dateSelect.appendChild(option);
+                            }
+                        });
+
+                        // Sélectionner la dernière session passée (si elle existe)
+                        if (lastPastSessionIndex !== -1) {
+                            dateSelect.selectedIndex = lastPastSessionIndex;
+                            chargerNotes(); // Charger les notes de la dernière session passée
+                        } else if (dateSelect.options.length > 0) {
+                            // Si aucune session passée, sélectionner la première future
+                            dateSelect.selectedIndex = 0;
+                            chargerNotes();
                         }
                     }).catch(error => {
                         console.error("Erreur lors du chargement des sessions :", error);
                     });
+
             }
 
             // Fonction pour charger les notes existantes d'une session
             function chargerNotes() {
-                console.log("Tentative de chargement des notes...");
                 const sessionId = dateSelect.value;
-                console.log("Session sélectionnée :", sessionId);
-
                 if (!sessionId) return;
 
                 db.collection("Sessions").doc(sessionId).get().then((doc) => {
                     if (doc.exists) {
                         const sessionData = doc.data();
-                        console.log("Notes chargées :", sessionData.notes);
-
-                        // Charger les notes existantes dans le textarea
                         notesTextarea.value = sessionData.notes || "";
                     } else {
                         console.log("Aucune donnée trouvée pour la session sélectionnée.");
@@ -115,6 +176,42 @@
                 }).catch(error => {
                     console.error("Erreur lors du chargement des notes :", error);
                 });
+            }
+
+            // Fonction pour charger les objectifs
+            function chargerObjectifs() {
+                const participant = participantSelect.value === "eric" ? ["Eric", "eric"] : ["Jezabel", "jezabel"];
+                const objectifContent = document.getElementById('objectif-content');
+                objectifContent.innerHTML = ''; // Réinitialiser le contenu
+
+                // Requête Firestore pour récupérer les objectifs du participant
+                db.collection("Objectifs").where("participant", "in", participant)
+                    .get()
+                    .then(querySnapshot => {
+                        console.log(`Nombre d'objectifs trouvés pour ${participant} : `, querySnapshot.size); // Log pour le nombre d'objectifs
+                        if (querySnapshot.empty) {
+                            console.log("Aucun objectif trouvé pour :", participant);
+                            objectifContent.innerHTML = '<p>Aucun objectif trouvé</p>';
+                        } else {
+                            querySnapshot.forEach(doc => {
+                                const objectif = doc.data();
+                                console.log("Objectif data :", objectif); // Log des objectifs récupérés
+
+                                // Créer une carte pour chaque objectif
+                                const objectifCard = document.createElement('div');
+                                objectifCard.classList.add('card', 'objectif-card');
+                                objectifCard.innerHTML = `
+                                    <h3>${objectif.titre}</h3>
+                                    <p>Description: ${objectif.description}</p>
+                                    <p>Progression: ${objectif.progression}%</p>
+                                    <p>Deadline: ${new Date(objectif.deadline.seconds * 1000).toLocaleDateString()}</p>
+                                `;
+                                objectifContent.appendChild(objectifCard);
+                            });
+                        }
+                    }).catch(error => {
+                        console.error("Erreur lors du chargement des objectifs :", error);
+                    });
             }
 
             // Fonction pour sauvegarder les notes mises à jour
@@ -135,12 +232,17 @@
 
             // Charger les dates et les notes quand un participant ou une date est sélectionné
             participantSelect.addEventListener('change', chargerDates);
-            dateSelect.addEventListener('change', chargerNotes); // Charger les notes quand une date est sélectionnée
+            dateSelect.addEventListener('change', chargerNotes);
+            participantSelect.addEventListener('change', function() {
+                chargerDates(); // Charger les dates des sessions
+                chargerObjectifs(); // Charger les objectifs
+            });
 
             // Ajouter un bouton de sauvegarde
             document.getElementById('save-notes').addEventListener('click', sauvegarderNotes);
         });
     </script>
+    <script src="js/coachingForms.js"></script>
 </body>
 
 </html>

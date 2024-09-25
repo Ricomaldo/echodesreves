@@ -134,3 +134,58 @@ main {
     flex-direction: column;
     justify-content: space-between;
 }
+.note-editor {
+    display: flex;
+    flex-direction: column;
+}
+.formulaires {
+    display: flex;
+    flex-direction: column;
+
+    @media screen and (min-width: 768px) {
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 30px;
+    }
+}
+
+.form-section {
+    margin-top: 30px;
+    padding: 20px;
+    
+    border: 1px solid $neutral-color;
+    border-radius: 8px;
+    background-color: $background-color;
+
+    h3 {
+        margin-bottom: 15px;
+        color: $main-color;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+
+        label {
+            font-weight: bold;
+            color: $text-color;
+        }
+
+        input, select, textarea, button {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid $neutral-color;
+        }
+
+        button {
+            background-color: $main-color;
+            color: white;
+            cursor: pointer;
+
+            &:hover {
+                background-color: darken($main-color, 10%);
+            }
+        }
+    }
+}
