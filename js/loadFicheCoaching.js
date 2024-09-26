@@ -5,46 +5,31 @@ document.addEventListener('DOMContentLoaded', function () {
     const today = new Date().setHours(0, 0, 0, 0); // Date du jour sans heure
 
     // Définition des fonctions chargerDates, chargerNotes, chargerObjectifs, etc.
+
     function chargerDates() {
-        const participant = participantSelect.value === "eric" ? ["Eric", "eric"] : ["Jezabel", "jezabel"];
-        console.log("Participants sélectionnés :", participant);
-    
+        const participant = participantSelect.value.toLowerCase(); // Utiliser en minuscule
+        console.log("Participant sélectionné :", participant);
+
         dateSelect.innerHTML = ''; // Réinitialiser les options
-    
-        // Requête Firestore pour récupérer toutes les sessions pour les deux variantes de participant
-        const promises = [
-            db.collection("Sessions").where("participant", "==", participant[0]).get(),
-            db.collection("Sessions").where("participant", "==", participant[1]).get()
-        ];
-    
-        Promise.all(promises)
-            .then(querySnapshots => {
-                let allSessions = [];
-    
-                // Combiner les résultats des deux requêtes
-                querySnapshots.forEach(querySnapshot => {
-                    allSessions = allSessions.concat(querySnapshot.docs);
-                });
-    
-                // Filtrer les doublons en fonction de l'ID du document (Firestore attribue des ID uniques)
-                const uniqueSessions = allSessions.filter((session, index, self) =>
-                    index === self.findIndex((s) => (
-                        s.id === session.id
-                    ))
-                );
-    
+
+        // Requête Firestore pour récupérer toutes les sessions du participant
+        db.collection("Sessions").where("participant", "==", participant)
+            .get()
+            .then(querySnapshot => {
+                let allSessions = querySnapshot.docs;
+
                 let lastPastSessionIndex = -1; // Variable pour stocker l'index de la dernière session passée
-    
+
                 // Parcourir toutes les sessions (passées et futures)
-                uniqueSessions.forEach((doc, index) => {
+                allSessions.forEach((doc, index) => {
                     const session = doc.data();
                     const sessionDate = session.date.seconds * 1000;
-    
+
                     // Vérifier si la session est passée
                     if (sessionDate <= today) {
                         lastPastSessionIndex = index; // Stocker l'index de la dernière session passée
                     }
-    
+
                     // Ajouter l'option au menu déroulant
                     if (session.date && session.date.seconds) {
                         const option = document.createElement('option');
@@ -53,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         dateSelect.appendChild(option);
                     }
                 });
-    
+
                 // Sélectionner la dernière session passée (si elle existe)
                 if (lastPastSessionIndex !== -1) {
                     dateSelect.selectedIndex = lastPastSessionIndex;
@@ -85,12 +70,12 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function chargerObjectifs() {
-        const participant = participantSelect.value === "eric" ? ["Eric", "eric"] : ["Jezabel", "jezabel"];
+        const participant = participantSelect.value === "eric" ? "eric" : "jezabel";
         const objectifContent = document.getElementById('objectif-content');
         objectifContent.innerHTML = ''; // Réinitialiser le contenu
-
+    
         // Requête Firestore pour récupérer les objectifs du participant
-        db.collection("Objectifs").where("participant", "in", participant)
+        db.collection("Objectifs").where("participant", "==", participant)
             .get()
             .then(querySnapshot => {
                 console.log(`Nombre d'objectifs trouvés pour ${participant} : `, querySnapshot.size); // Log pour le nombre d'objectifs
@@ -101,22 +86,76 @@ document.addEventListener('DOMContentLoaded', function () {
                     querySnapshot.forEach(doc => {
                         const objectif = doc.data();
                         console.log("Objectif data :", objectif); // Log des objectifs récupérés
-
+    
                         // Créer une carte pour chaque objectif
                         const objectifCard = document.createElement('div');
                         objectifCard.classList.add('card', 'objectif-card');
+    
+                        // Créer l'input range pour la progression
+                        const rangeInput = document.createElement('input');
+                        rangeInput.type = 'range';
+                        rangeInput.min = 0;
+                        rangeInput.max = 100;
+                        rangeInput.value = objectif.progression;
+    
+                        // Vérifier si la progression est à 100% pour appliquer la classe "completed"
+                        if (objectif.progression === 100) {
+                            rangeInput.classList.add('completed'); // Ajoute la classe pour changer la couleur du curseur
+                        }
+    
+                        // Mettre à jour Firestore lors du changement de valeur
+                        rangeInput.addEventListener('input', function () {
+                            const newValue = parseInt(this.value);
+                            db.collection("Objectifs").doc(doc.id).update({
+                                progression: newValue
+                            }).then(() => {
+                                console.log("Progression mise à jour :", newValue);
+    
+                                // Appliquer la classe "completed" si la progression est à 100%
+                                if (newValue === 100) {
+                                    this.classList.add('completed');
+                                } else {
+                                    this.classList.remove('completed');
+                                }
+                            }).catch(error => {
+                                console.error("Erreur lors de la mise à jour de la progression :", error);
+                            });
+                        });
+    
+                        // Remplir la carte avec les informations de l'objectif
                         objectifCard.innerHTML = `
                             <h3>${objectif.titre}</h3>
                             <p>Description: ${objectif.description}</p>
                             <p>Progression: ${objectif.progression}%</p>
                             <p>Deadline: ${new Date(objectif.deadline.seconds * 1000).toLocaleDateString()}</p>
                         `;
+    
+                        // Ajouter l'input range à la carte
+                        objectifCard.appendChild(rangeInput);
+    
+                        // Ajouter la carte dans le conteneur
                         objectifContent.appendChild(objectifCard);
                     });
                 }
             }).catch(error => {
                 console.error("Erreur lors du chargement des objectifs :", error);
             });
+    }
+    
+    function sauvegarderNotes() {
+        const sessionId = dateSelect.value;
+        if (!sessionId) return;
+
+        const notes = notesTextarea.value; // Récupérer le contenu du textarea
+
+        // Mettre à jour le document Firestore avec les nouvelles notes
+        db.collection("Sessions").doc(sessionId).update({
+            notes: notes
+        }).then(() => {
+            console.log("Notes mises à jour !");
+        }).catch(error => {
+            console.error("Erreur lors de la mise à jour des notes :", error);
+        });
     }
 
     // Charger les dates et les objectifs dès que la page se charge pour le participant sélectionné par défaut
