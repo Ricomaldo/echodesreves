@@ -5,11 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coaching - L'écho des rêves</title>
+    <link rel="icon" type="image/png" href="images/logo/plume_favicon.png">
+
     <link rel="preload" href="css/style.css" as="style" onload="this.rel='stylesheet'">
 </head>
 
 <body>
-    <h1>Page Coaching</h1>
+    <main>
+    <h1>Coaching</h1>
 
     <!-- Bloc pour sélectionner la personne -->
     <div class="coaching-select">
@@ -38,7 +41,7 @@
 
     <!-- Sous-bloc Objectifs -->
     <div class="objectifs">
-        <h2>Objectifs</h2>
+        <h2>Objectifs en cours</h2>
         <div id="objectif-content"></div>
     </div>
 
@@ -91,6 +94,18 @@
         </div>
     </div>
 
+
+    <!-- Sous-bloc pour la navigation -->
+    <div class="nav">
+        <a class="nav-btn" href="index.html">Dashboard</a>
+        <a class="nav-btn" href="progression.html">Progression</a>
+    </div>
+    
+</main>
+
+<footer>
+    <p>© 2024 L'écho des rêves</p>
+</footer>
     <!-- Scripts pour Firebase -->
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>

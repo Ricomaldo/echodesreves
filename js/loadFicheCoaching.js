@@ -70,15 +70,17 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function chargerObjectifs() {
-        const participant = participantSelect.value === "eric" ? "eric" : "jezabel";
+        const participant = participantSelect.value.toLowerCase(); // Utiliser en minuscule
         const objectifContent = document.getElementById('objectif-content');
         objectifContent.innerHTML = ''; // Réinitialiser le contenu
     
         // Requête Firestore pour récupérer les objectifs du participant
         db.collection("Objectifs").where("participant", "==", participant)
+            .where("progression", "<", 100) // Cette condition pourrait poser problème si le type n'est pas correct
             .get()
             .then(querySnapshot => {
                 console.log(`Nombre d'objectifs trouvés pour ${participant} : `, querySnapshot.size); // Log pour le nombre d'objectifs
+    
                 if (querySnapshot.empty) {
                     console.log("Aucun objectif trouvé pour :", participant);
                     objectifContent.innerHTML = '<p>Aucun objectif trouvé</p>';
@@ -96,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         rangeInput.type = 'range';
                         rangeInput.min = 0;
                         rangeInput.max = 100;
-                        rangeInput.value = objectif.progression;
+                        rangeInput.value = parseInt(objectif.progression); // S'assurer que c'est bien un nombre
     
                         // Vérifier si la progression est à 100% pour appliquer la classe "completed"
                         if (objectif.progression === 100) {
@@ -114,6 +116,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 // Appliquer la classe "completed" si la progression est à 100%
                                 if (newValue === 100) {
                                     this.classList.add('completed');
+                                    objectifCard.remove(); // Retirer l'objectif de la liste lorsqu'il atteint 100%
                                 } else {
                                     this.classList.remove('completed');
                                 }
@@ -125,9 +128,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         // Remplir la carte avec les informations de l'objectif
                         objectifCard.innerHTML = `
                             <h3>${objectif.titre}</h3>
-                            <p>Description: ${objectif.description}</p>
-                            <p>Progression: ${objectif.progression}%</p>
-                            <p>Deadline: ${new Date(objectif.deadline.seconds * 1000).toLocaleDateString()}</p>
+                            <p>${objectif.description} avant le ${new Date(objectif.deadline.seconds * 1000).toLocaleDateString()}.</p>
                         `;
     
                         // Ajouter l'input range à la carte
@@ -141,7 +142,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.error("Erreur lors du chargement des objectifs :", error);
             });
     }
-    
+          
+        
     function sauvegarderNotes() {
         const sessionId = dateSelect.value;
         if (!sessionId) return;

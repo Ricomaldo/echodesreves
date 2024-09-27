@@ -5,67 +5,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Progression - L'écho des rêves</title>
+    <link rel="icon" type="image/png" href="images/logo/plume_favicon.png">
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
-    <h1>Page Progression</h1>
+    <header>
+        <h1>Progression des objectifs</h1>
+    </header>
 
-    <!-- Onglets -->
-    <div class="tabs">
-        <button class="tab-btn" id="tab-eric" onclick="afficherObjectifs('eric')">Eric</button>
-        <button class="tab-btn" id="tab-jezabel" onclick="afficherObjectifs('jezabel')">Jezabel</button>
+    <main>
+        <div class="tabs">
+            <button class="tab-btn" onclick="openTab(event, 'eric')">Eric</button>
+            <button class="tab-btn" onclick="openTab(event, 'jezabel')">Jezabel</button>
+        </div>
+
+        <div id="eric" class="tab-content">
+            <section class="objectifs-eric">
+                <h2>Objectifs atteints d'Eric</h2>
+                <div class="objectif-content-eric"></div>
+            </section>
+        </div>
+
+        <div id="jezabel" class="tab-content">
+            <section class="objectifs-jezabel">
+                <h2>Objectifs atteints de Jezabel</h2>
+                <div class="objectif-content-jezabel"></div>
+            </section>
+        </div>
+
+
+    <!-- Sous-bloc pour la navigation -->
+    <div class="nav">
+        <a class="nav-btn" href="index.html">Dashboard</a>
+        <a class="nav-btn" href="coaching.html">Coaching</a>
     </div>
+    
+</main>
 
-    <!-- Objectifs atteints pour Eric -->
-    <div id="objectif-eric" class="tab-content">
-        <h2>Objectifs atteints</h2>
-        <div id="objectif-eric-content"></div>
-    </div>
-
-    <!-- Objectifs atteints pour Jezabel -->
-    <div id="objectif-jezabel" class="tab-content">
-        <h2>Objectifs atteints</h2>
-        <div id="objectif-jezabel-content"></div>
-    </div>
-
-    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+<footer>
+    <p>© 2024 L'écho des rêves</p>
+</footer>    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
 
     <script src="js/firebaseConfig.js"></script>
-    <script>
-        // Afficher les objectifs atteints selon le participant
-        function afficherObjectifs(participant) {
-    const selectedParticipant = participant === "eric" ? "Eric" : "Jezabel"; // Adapter la casse
-    const contentDiv = document.getElementById(`objectif-${participant}-content`);
-    console.log("Participant sélectionné pour progression :", selectedParticipant);
-    
-    contentDiv.innerHTML = ''; // Réinitialiser les objectifs
 
-    db.collection("objectifs").where("participant", "==", selectedParticipant).where("progression", "==", 100)
-        .get()
-        .then(querySnapshot => {
-            if (querySnapshot.empty) {
-                console.log("Aucun objectif trouvé pour :", selectedParticipant);
-            } else {
-                querySnapshot.forEach(doc => {
-                    const objectif = doc.data();
-                    console.log("Objectif trouvé :", objectif);
-                    const div = document.createElement('div');
-                    div.classList.add('card', 'objectif-card');
-                    div.innerHTML = `<h3>${objectif.titre}</h3><p>${objectif.description}</p><img src="path/to/green-check-icon.png" alt="Objectif atteint" />`;
-                    contentDiv.appendChild(div);
-                });
-            }
-        }).catch(error => {
-            console.error("Erreur lors du chargement des objectifs :", error);
-        });
-}
-
-
-        // Charger initialement les objectifs d'Eric
-        afficherObjectifs('eric');
-    </script>
+    <script src="js/progression.js"></script>
 </body>
 
 </html>

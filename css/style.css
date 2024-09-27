@@ -19,6 +19,7 @@ body {
 
 h1, h2 {
   color: #017374;
+  text-align: center;
 }
 
 header {
@@ -204,6 +205,7 @@ input[type=range] {
   outline: none;
   opacity: 0.7;
   transition: opacity 0.2s;
+  margin-top: 15px;
 }
 input[type=range]:hover {
   opacity: 1;
@@ -245,6 +247,18 @@ input[type=range].completed::-moz-range-thumb {
 
 input[type=range].completed::-ms-thumb {
   background: #017374;
+}
+
+.star-line {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap; /* Permet aux étoiles de passer à la ligne */
+  gap: 5px; /* Espace entre les étoiles */
+  margin-bottom: 20px; /* Espace sous la ligne d'étoiles */
+}
+
+.star-line span {
+  font-size: 1.5rem; /* Taille des étoiles */
 }
 
 /*# sourceMappingURL=style.css.map */

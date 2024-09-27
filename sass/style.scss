@@ -28,6 +28,7 @@ body {
 
 h1, h2 {
     color: $main-color;
+    text-align:center;
 }
 
 // Header styling
@@ -86,15 +87,6 @@ main {
 .tab-content.active {
     display: block; // Afficher quand actif
 }
-
-// // Sections styling
-// .sessions-eric, .objectifs-eric {
-//     border-left: 4px solid $main-color;
-// }
-
-// .sessions-jezabel, .objectifs-jezabel {
-//     border-left: 4px solid $accent-color;
-// }
 
 .nav {
     display: flex;
@@ -226,7 +218,7 @@ input[type="range"] {
     outline: none;
     opacity: 0.7;
     transition: opacity .2s;
-
+    margin-top:15px;
     &:hover {
         opacity: 1;
     }
@@ -272,4 +264,17 @@ input[type="range"].completed::-moz-range-thumb {
 
 input[type="range"].completed::-ms-thumb {
     background: #017374; // Vert pour 100%
+}
+
+// Style pour la ligne d'étoile
+.star-line {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap; /* Permet aux étoiles de passer à la ligne */
+    gap: 5px; /* Espace entre les étoiles */
+    margin-bottom: 20px; /* Espace sous la ligne d'étoiles */
+}
+
+.star-line span {
+    font-size: 1.5rem; /* Taille des étoiles */
 }
