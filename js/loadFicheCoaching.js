@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                                     // Afficher une pop-up de félicitations pour l'objectif atteint
                                     setTimeout(() => {
-                                        alert(`Bravo ${participant.charAt(0).toUpperCase() + participant.slice(1)} ! Tu as atteint l'objectif : ${objectif.titre}`) !;
+                                        alert(`Bravo ${participant.charAt(0).toUpperCase() + participant.slice(1)} ! Tu as atteint l'objectif : ${objectif.titre} !`);
                                     }, 500);
 
                                     // Ne supprimer l'objectif qu'après avoir quitté la page

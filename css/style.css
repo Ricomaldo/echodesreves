@@ -151,12 +151,15 @@ main {
 
 .notes-container {
   margin-top: 10px;
-  max-height: 100px; /* Limiter la hauteur des notes */
-  overflow-y: auto; /* Barre de défilement verticale */
+  max-height: 100px;
+  overflow-y: auto;
   border: 1px solid #ddd;
   padding: 10px;
   border-radius: 4px;
   background-color: #f9f9f9;
+  min-width: 100%;
+  width: 100%;
+  max-width: 600px;
 }
 
 .notes-content {
