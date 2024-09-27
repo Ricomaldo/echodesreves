@@ -6,6 +6,8 @@
     <title>Coaching - L'écho des rêves</title>
     <link rel="icon" type="image/png" href="images/logo/plume_favicon.png">
     <link rel="preload" href="css/style.css" as="style" onload="this.rel='stylesheet'">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+
 </head>
 <body>
     <header>
@@ -13,77 +15,57 @@
     </header>
 
     <main>
-        <nav class="nav">
+        <div class="nav">
             <a class="nav-btn" href="index.html">Dashboard</a>
             <a class="nav-btn" href="coaching.html">Coaching</a>
             <a class="nav-btn" href="progression.html">Progression</a>
-        </nav>
-
-        <!-- Sélection du participant et de la session -->
-        <div class="coaching-select">
-            <label for="participant-select">Participant :</label>
-            <select id="participant-select">
-                <option value="eric">Eric</option>
-                <option value="jezabel">Jezabel</option>
-            </select>
         </div>
-
-        <div class="coaching-select">
-            <label for="date-select">Date de session :</label>
-            <select id="date-select"></select>
+    
+        <div class="tabs">
+            <button class="tab-btn" onclick="openTab(event, 'eric')">Eric</button>
+            <button class="tab-btn" onclick="openTab(event, 'jezabel')">Jezabel</button>
         </div>
-
-        <!-- Prise de notes -->
-        <div class="note-editor card">
-            <h2>Prise de notes</h2>
-            <textarea id="notes-textarea" rows="10" placeholder="Vos notes ici..."></textarea>
-            <button id="save-notes">Sauvegarder les notes</button>
-        </div>
-
-        <!-- Objectifs en cours -->
-        <section class="objectifs">
-            <h2>Objectifs en cours</h2>
-            <div id="objectif-content" class="objectif-content"></div>
-        </section>
-
-        <!-- Formulaires -->
-        <div class="formulaires">
-            <div class="form-section card">
-                <h3>Ajouter un Objectif</h3>
-                <form id="add-objectif-form">
-                    <label for="participant-objectif">Participant :</label>
-                    <select id="participant-objectif" required>
-                        <option value="eric">Eric</option>
-                        <option value="jezabel">Jezabel</option>
-                    </select>
-                    <label for="titre-objectif">Titre :</label>
-                    <input type="text" id="titre-objectif" required>
-                    <label for="description-objectif">Description :</label>
-                    <textarea id="description-objectif" rows="3" required></textarea>
-                    <label for="progression-objectif">Progression :</label>
-                    <input type="number" id="progression-objectif" min="0" max="100" value="0" required>
-                    <label for="deadline-objectif">Deadline :</label>
-                    <input type="date" id="deadline-objectif" required>
-                    <button type="submit">Ajouter Objectif</button>
-                </form>
+    
+        <div id="eric" class="tab-content">
+            <!-- Contenu pour Eric (Objectifs, Sessions, etc.) -->
+            <div class="coaching-select">
+                <label for="date-select-eric">Date de session :</label>
+                <select id="date-select-eric"></select>
             </div>
 
-            <div class="form-section card">
-                <h3>Ajouter une Session</h3>
-                <form id="add-session-form">
-                    <label for="participant-session">Participant :</label>
-                    <select id="participant-session" required>
-                        <option value="eric">Eric</option>
-                        <option value="jezabel">Jezabel</option>
-                    </select>
-                    <label for="lieu-session">Lieu :</label>
-                    <input type="text" id="lieu-session" required>
-                    <label for="date-session">Date :</label>
-                    <input type="date" id="date-session" required>
-                    <label for="notes-session">Notes :</label>
-                    <textarea id="notes-session" rows="3"></textarea>
-                    <button type="submit">Ajouter Session</button>
-                </form>
+            <div class="note-editor card">
+                <h2>Prise de notes</h2>
+                <!-- Remplacer textarea par un div avec la classe 'notes-container' et 'notes-content' -->
+                <div class="notes-container">
+                    <div id="notes-textarea-eric" class="notes-content"></div>
+                </div>
+                <button id="save-notes-eric">Sauvegarder les notes</button>
+            </div>
+         
+            <div class="objectifs-eric">
+                <h2>Objectifs en cours</h2>
+                <div id="objectif-content-eric"></div>
+            </div>
+        </div>
+    
+        <div id="jezabel" class="tab-content">
+            <!-- Contenu pour Jezabel (Objectifs, Sessions, etc.) -->
+            <div class="coaching-select">
+                <label for="date-select-jezabel">Date de session :</label>
+                <select id="date-select-jezabel"></select>
+            </div>
+
+            <div class="note-editor card">
+                <h2>Prise de notes</h2>
+                <div class="notes-container">
+                    <div id="notes-textarea-jezabel" class="notes-content"></div>
+                </div>
+                <button id="save-notes-jezabel">Sauvegarder les notes</button>
+            </div>
+
+            <div class="objectifs-jezabel">
+                <h2>Objectifs en cours</h2>
+                <div id="objectif-content-jezabel"></div>
             </div>
         </div>
     </main>
@@ -95,9 +77,8 @@
     <!-- Scripts pour Firebase -->
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
-
     <script src="js/firebaseConfig.js"></script>
     <script src="js/loadFicheCoaching.js"></script>
-    <script src="js/coachingForms.js"></script>
+    <script src="js/opentab.js"></script>
 </body>
 </html>

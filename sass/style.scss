@@ -1,21 +1,36 @@
-// Variables for colors
-$main-color: #017374;      // Bleu canard
-$accent-color: #FFA726;    // Orange doux
-$background-color: #F5F5F5; // Blanc cassé
-$neutral-color: #E0E0E0;   // Gris clair
+// Variables
+$main-color: #017374;
+$accent-color: #FFA726;
+$background-color: #F5F5F5;
+$neutral-color: #E0E0E0;
 $text-color: #333;
-$highlight-color: #FFD54F; // Jaune doré
+$highlight-color: #FFD54F;
+$secondary-bg: #ffffff; // Background for nav and cards
 
-// General reset
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Raleway', sans-serif;
+$iphone-12-width: 380x; // Largeur spécifique pour iPhone 12
+
+// Header
+header {
+    text-align: center;
+    padding: 20px;
+    background-color: $main-color;
+    color: $background-color;
+    border-radius: 8px;
+
+    h1 {
+        font-size: 1.8rem;
+        margin: 0;
+    }
+
+    a {
+        text-decoration: none;
+        color: $background-color;
+    }
 }
 
-// Body styling
 body {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
     background-color: $background-color;
     color: $text-color;
     padding: 20px;
@@ -23,252 +38,241 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    max-width: 100%; // Empêche de dépasser la largeur de l'écran
 }
 
 h1, h2 {
-    color: $main-color;
-    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+}
+// Pour centrer les titres et appliquer la couleur d'accentuation
+h2 {
+    text-align: center;      // Centrer les titres
+    color: $accent-color;    // Appliquer la couleur d'accentuation
+    font-size: 1.8rem;       // Ajuster la taille des titres si nécessaire
+    margin-bottom: 20px;     // Espacement sous le titre
 }
 
-// Header styling
-header {
-    text-align: center;
-    padding: 10px;
-    background-color: $main-color;
-    color: white;
-    border-radius: 12px;
-    transition: background-color 0.3s ease, transform 0.3s ease;  // Effets de transition
-
-    h1 {
-        color: $background-color;
-        transition: color 0.3s ease;
-    }
-
-    a {
-        text-decoration: none;
-        color: inherit;
-        display: inline-block;
-        transition: color 0.3s ease, transform 0.3s ease;
-
-        /* Hover effect: Change text color and add slight scaling */
-        &:hover {
-            color: $accent-color;  // Change le texte au survol
-            transform: scale(1.05);  // Légère augmentation de la taille
-        }
-
-        /* Focus effect: Add outline for accessibility */
-        &:focus {
-            outline: 2px solid $highlight-color;  // Contour de focus visible
-            outline-offset: 3px;
-            transform: scale(1.05);  // Conserve l'effet de survol
-        }
-
-        /* Active effect: Slight scale down to simulate click */
-        &:active {
-            color: $highlight-color;  // Change la couleur lors du clic
-            transform: scale(0.98);  // Légère réduction de la taille
-        }
-    }
+// Pour les sous-titres spécifiques (comme "Objectifs d'Eric")
+h3 {
+    text-align: center;      // Centrer les sous-titres
+    color: $main-color;    // Appliquer la couleur d'accentuation
+    font-size: 1.5rem;       // Ajuster la taille des sous-titres
+    margin-bottom: 15px;     // Espacement sous les sous-titres
 }
-
-
-// Main sections styling
-main {
+// Barre de navigation
+.nav {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    max-width: 1200px;
+    justify-content: center;
+    gap: 15px;
+    margin: 15px 0;
+
+    .nav-btn {
+        background-color: $secondary-bg;
+        color: $main-color;
+        font-weight: bold;
+        padding: 12px 20px;
+        border-radius: 8px;
+        border: 1px solid $main-color;
+        transition: background-color 0.3s ease, color 0.3s ease;
+        text-align: center;
+        width: auto;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        text-decoration: none;
+
+        &:hover, &:focus {
+            background-color: $accent-color;
+            color: $secondary-bg;
+            outline: none;
+        }
+
+        &:active {
+            background-color: darken($accent-color, 10%);
+        }
+    }
+
+    @media screen and (max-width: $iphone-12-width) {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
 }
 
-// Tabs styling
+// Onglets
 .tabs {
     display: flex;
     justify-content: center;
+    margin: 20px 0 0;
+    gap: 10px;
+
+    .tab-btn {
+        background-color: $main-color;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 8px 8px 0 0;
+        border: 1px solid $main-color;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+            background-color: darken($main-color, 10%);
+        }
+
+        &.active {
+            background-color: $accent-color;
+            border-color: $accent-color;
+            color: white;
+        }
+    }
+
+    @media screen and (max-width: $iphone-12-width) {
+        .tab-btn {
+            padding: 8px 16px; // Réduire la taille sur mobile
+            font-size: 0.9rem; // Ajuster la taille de la police
+        }
+    }
 }
 
-.tab-btn {
-    background-color: $main-color;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-    font-size: 1.2rem;
-    transition: background-color 0.3s ease;
-    margin: 0 10px;
-    border-radius: 12px 12px 0 0;
-}
-
-.tab-btn:hover {
-    background-color: darken($main-color, 10%);
-}
-
-.tab-btn.active {
-    background-color: $accent-color;
-}
-
+// Contenu des onglets
 .tab-content {
-    display: none; // Caché par défaut
     background-color: white;
     padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
+    border-radius: 0 8px 8px 8px;
+    border: 1px solid $main-color;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    display: none;
 
-.tab-content.active {
-    display: block; // Afficher quand actif
-}
-
-.nav {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    gap: 15px;
-    padding: 25px;
-    max-width: 400px;
-}
-
-.nav-btn {
-    background-color: white;
-    color: $main-color;
-    font-weight: bold;
-    padding: 10px 20px;
-    border-radius: 12px;
-    text-decoration: none;
-    text-align: center;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    
-    /* Effet au survol (hover) */
-    &:hover {
-        background-color: $accent-color;  // Couleur de fond au survol
-        color: white;  // Texte blanc au survol
+    &.active {
+        display: block;
     }
 
-    /* Effet lors du clic (active) */
-    &:active {
-        background-color: darken($accent-color, 10%);  // Couleur plus foncée au clic
-        color: white;  // Texte blanc lors du clic
-        transform: scale(0.98);  // Légère réduction pour un effet de pression
-    }
-
-    /* Effet lorsqu'il est sélectionné (focus) */
-    &:focus {
-        outline: 2px solid $highlight-color;  // Ajoute une bordure pour indiquer le focus
-        outline-offset: 3px;  // Distance de la bordure avec le bouton
-    }
-
-    /* Style si le lien a déjà été visité (visited) */
-    &:visited {
-        color: $main-color;  // Maintien de la couleur de base si visité
+    @media screen and (max-width: $iphone-12-width) {
+        padding: 10px; // Réduction du padding pour les petits écrans
     }
 }
 
-
-// Style for session cards
-.session-card {
-    background-color: white;
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-}
-
-// Notes container with scrollbar
-// Notes container styling
+// Note editor
 .note-editor {
-    margin-top: 10px;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    background-color: #f9f9f9;
-
-    // Mobile-first width management
-    min-width: 300px;   // Minimal width for mobile devices
-    width: 100%;        // 100% of the screen width on mobile
-    max-width: 600px;   // Limit the width on larger screens
+    display: flex;
+    flex-direction: column; // Garder les éléments en colonne
+    align-items: center;    // Centrer le bouton et les autres éléments
+    margin: 20px 0;
+    padding: 20px;
+    background-color: $secondary-bg;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
 
     textarea {
-        width: 100%;    // Ensure textarea takes full width
-        min-height: 150px; // Ensure enough height for notes on mobile
+        width: 100%;
+        min-height: 120px;
         padding: 10px;
-        font-size: 1rem;
-        border-radius: 4px;
         border: 1px solid $neutral-color;
+        border-radius: 4px;
+        resize: none;
     }
 
     button {
-        margin-top: 10px;
-        padding: 10px 15px;
+        margin-top: 15px;
+        padding: 10px 20px;
         background-color: $main-color;
         color: white;
         border: none;
-        border-radius: 5px;
+        border-radius: 8px;
         cursor: pointer;
+        transition: background-color 0.3s ease;
 
         &:hover {
             background-color: darken($main-color, 10%);
         }
     }
+
+    @media screen and (max-width: $iphone-12-width) {
+        padding: 15px;
+
+        textarea {
+            min-height: 100px;
+        }
+    }
 }
 
-// Card styles
-.card {
+// Notes content
+.notes-content {
+    text-align: justify;  // Justifier le texte
+    max-height: 140px;  // Limite de hauteur
+    overflow-y: auto;  // Barre de défilement si le contenu dépasse
+    padding: 10px;  // Ajouter du padding pour rendre la lecture agréable
+    border: 1px solid $neutral-color;  // Délimiter visuellement la zone de notes
+    line-height: 1.6;  // Espacement entre les lignes pour faciliter la lecture
+}
+
+
+// Carte des sessions et objectifs
+.card, .session-card, .objectif-card {
     background-color: white;
-    padding: 15px;
+    padding: 20px;
     border-radius: 8px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    max-width: 100%; // Assure que ça ne dépasse pas la largeur de l'écran
+
+    @media screen and (max-width: $iphone-12-width) {
+        padding: 10px;
+    }
+
+    h3 {
+        margin-top: 5px; // Réduit l'espace au-dessus du titre
+        margin-bottom: 10px; // Espace sous le titre
+        font-size: 1.4rem;
+    }
+
+    p {
+        margin-bottom: 15px; // Espacement sous les paragraphes
+    }
 }
 
+// Objectifs en cours (spécifique à la page Coaching)
 .objectif-card {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    gap: 10px; // Espace entre les éléments à l'intérieur de la carte
 }
 
-// Progress bar styles
+// Barre de progression
 input[type="range"] {
     width: 100%;
     -webkit-appearance: none;
     appearance: none;
     height: 8px;
-    background: #ddd;
+    background: $neutral-color;
     outline: none;
     opacity: 0.7;
-    transition: opacity .2s;
-    margin-top: 15px;
+    transition: opacity .2s, background-color .3s ease;
+
     &:hover {
         opacity: 1;
     }
-    &::-webkit-slider-thumb {
-        -webkit-appearance: none;
-        appearance: none;
+
+    // Style pour le curseur
+    &::-webkit-slider-thumb, &::-moz-range-thumb {
         width: 20px;
         height: 20px;
-        background: $neutral-color; // Color of the thumb
+        background: $main-color; // Couleur par défaut du curseur
         cursor: pointer;
         border-radius: 50%;
         transition: background 0.3s ease;
     }
-    &::-moz-range-thumb, &::-ms-thumb {
-        width: 20px;
-        height: 20px;
-        background: $neutral-color;
-        cursor: pointer;
-        border-radius: 50%;
-        transition: background 0.3s ease;
+
+    // Style pour une progression de 100%
+    &.completed {
+        background: $highlight-color; // Changement de couleur lorsque la barre est complète
+
+        &::-webkit-slider-thumb, &::-moz-range-thumb {
+            background: $highlight-color; // Changement de couleur du curseur à 100%
+        }
     }
 }
 
-input[type="range"].completed::-webkit-slider-thumb,
-input[type="range"].completed::-moz-range-thumb,
-input[type="range"].completed::-ms-thumb {
-    background: $main-color; // Green when complete
-}
-
-// Star line for objective completion
+// Style pour le conteneur d'étoiles (centré)
 .star-line {
     display: flex;
     justify-content: center;
@@ -279,4 +283,44 @@ input[type="range"].completed::-ms-thumb {
 
 .star-line span {
     font-size: 1.5rem;
+}
+
+// Media queries pour l'iPhone 12 et écrans plus petits
+@media screen and (max-width: $iphone-12-width) {
+    body {
+        padding: 10px;
+    }
+
+    .nav-btn, .tab-btn, .note-editor, .card, .session-card {
+        width: 100%; // S'assurer que tout est à 100% de la largeur
+        max-width: 100%; // Limite la taille maximale à 100%
+    }
+}
+
+// Centrage global pour les blocs
+main, .tabs, .tab-content, .note-editor {
+    max-width: 1000px;
+    margin: 0 auto; // Centrer les éléments
+}
+
+// Centrer le label et le select du bloc "Date de session"
+.coaching-select {
+    display: flex;
+    flex-direction: column;
+    align-items: center;  // Centrer horizontalement
+    margin: 20px 0;       // Espacement en haut et en bas
+
+    label {
+        font-size: 1.2rem; // Ajuster la taille de la police du label
+        margin-bottom: 10px; // Espacement sous le label
+    }
+
+    select {
+        padding: 10px;
+        font-size: 1rem;
+        border-radius: 4px;
+        border: 1px solid $neutral-color;
+        width: 200px;      // Ajuste la largeur du select
+        text-align: center; // Centre le texte du select
+    }
 }
