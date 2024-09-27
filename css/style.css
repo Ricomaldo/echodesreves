@@ -151,23 +151,35 @@ main {
   flex-direction: column;
 }
 
-.notes-container {
+.note-editor {
   margin-top: 10px;
-  max-height: 100px;
-  overflow-y: auto;
-  border: 1px solid #ddd;
   padding: 10px;
+  border: 1px solid #ddd;
   border-radius: 4px;
   background-color: #f9f9f9;
-  min-width: 100%;
+  min-width: 300px;
   width: 100%;
   max-width: 600px;
 }
-
-.notes-content {
-  white-space: pre-wrap; /* Conserver les retours à la ligne */
-  font-size: 0.9rem;
-  line-height: 1.4;
+.note-editor textarea {
+  width: 100%;
+  min-height: 150px;
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 4px;
+  border: 1px solid #E0E0E0;
+}
+.note-editor button {
+  margin-top: 10px;
+  padding: 10px 15px;
+  background-color: #017374;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.note-editor button:hover {
+  background-color: #014141;
 }
 
 .card {

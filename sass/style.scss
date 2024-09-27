@@ -176,25 +176,41 @@ main {
 }
 
 // Notes container with scrollbar
-.notes-container {
+// Notes container styling
+.note-editor {
     margin-top: 10px;
-    max-height: 100px; // Limiter la hauteur des notes
-    overflow-y: auto;  // Barre de défilement verticale
-    border: 1px solid #ddd;
     padding: 10px;
+    border: 1px solid #ddd;
     border-radius: 4px;
     background-color: #f9f9f9;
-    min-width: 100%;  // Largeur minimale pour mobile-first
-    width: 100%;      // S'assure que la largeur est à 100% de l'écran du mobile
-    max-width: 600px; // Limite la taille sur des écrans plus grands pour une meilleure lisibilité
-}
 
-  
+    // Mobile-first width management
+    min-width: 300px;   // Minimal width for mobile devices
+    width: 100%;        // 100% of the screen width on mobile
+    max-width: 600px;   // Limit the width on larger screens
 
-.notes-content {
-    white-space: pre-wrap; /* Conserver les retours à la ligne */
-    font-size: 0.9rem;
-    line-height: 1.4;
+    textarea {
+        width: 100%;    // Ensure textarea takes full width
+        min-height: 150px; // Ensure enough height for notes on mobile
+        padding: 10px;
+        font-size: 1rem;
+        border-radius: 4px;
+        border: 1px solid $neutral-color;
+    }
+
+    button {
+        margin-top: 10px;
+        padding: 10px 15px;
+        background-color: $main-color;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+
+        &:hover {
+            background-color: darken($main-color, 10%);
+        }
+    }
 }
 
 // Card styles
