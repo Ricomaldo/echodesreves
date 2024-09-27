@@ -14,36 +14,37 @@
     </header>
 
     <main>
+        <nav class="nav">
+            <a class="nav-btn" href="index.html">Dashboard</a>
+            <a class="nav-btn" href="coaching.html">Coaching</a>
+            <a class="nav-btn" href="progression.html">Progression</a>
+        </nav>
+
         <div class="tabs">
             <button class="tab-btn" onclick="openTab(event, 'jezabel')">Jezabel</button>
             <button class="tab-btn" onclick="openTab(event, 'eric')">Eric</button>
         </div>
 
+        <!-- Section pour Jezabel -->
         <div id="jezabel" class="tab-content">
             <section class="objectifs-jezabel">
                 <h2>Objectifs en cours</h2>
-                <div id="jezabel-objectif-content" class="objectif-content"></div> <!-- Correction de l'id ici -->
+                <div id="jezabel-objectif-content" class="objectif-content"></div>
             </section>
-            
             <section class="sessions-jezabel">
                 <div id="jezabel-session-content" class="session-content"></div>
             </section>
         </div>
-        
+
+        <!-- Section pour Eric -->
         <div id="eric" class="tab-content">
             <section class="objectifs-eric">
                 <h2>Objectifs en cours</h2>
-                <div id="eric-objectif-content" class="objectif-content"></div> <!-- Correction de l'id ici -->
+                <div id="eric-objectif-content" class="objectif-content"></div>
             </section>
-            
             <section class="sessions-eric">
                 <div id="eric-session-content" class="session-content"></div>
             </section>
-        </div>
-
-        <div class="nav">
-            <a class="nav-btn" href="coaching.html">Coaching</a>
-            <a class="nav-btn" href="progression.html">Progression</a>
         </div>
     </main>
 
@@ -58,6 +59,6 @@
 
     <!-- Scripts pour fonctionalités -->
     <script src="js/opentab.js"></script>
-    <script src="js/dashboard.js"></script>  
+    <script src="js/dashboard.js"></script>
 </body>
 </html>

@@ -1,111 +1,97 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coaching - L'écho des rêves</title>
     <link rel="icon" type="image/png" href="images/logo/plume_favicon.png">
-
     <link rel="preload" href="css/style.css" as="style" onload="this.rel='stylesheet'">
 </head>
-
 <body>
+    <header>
+        <a href="index.html"><h1>L'écho des rêves</h1></a>
+    </header>
+
     <main>
-    <h1>Coaching</h1>
+        <nav class="nav">
+            <a class="nav-btn" href="index.html">Dashboard</a>
+            <a class="nav-btn" href="coaching.html">Coaching</a>
+            <a class="nav-btn" href="progression.html">Progression</a>
+        </nav>
 
-    <!-- Bloc pour sélectionner la personne -->
-    <div class="coaching-select">
-        <label for="participant-select">Participant :</label>
-        <select id="participant-select">
-            <option value="eric">Eric</option>
-            <option value="jezabel">Jezabel</option>
-        </select>
-    </div>
-
-    <!-- Bloc pour sélectionner la date de la session -->
-    <div class="coaching-select">
-        <label for="date-select">Date de session :</label>
-        <select id="date-select">
-            <!-- Options dynamiques insérées via JS -->
-        </select>
-    </div>
-
-    <!-- Sous-bloc pour la prise de notes -->
-    <div class="note-editor">
-        <h2>Prise de notes</h2>
-        <textarea id="notes-textarea" rows="10" cols="50" placeholder="Vos notes ici..."></textarea>
-        <!-- Bouton pour sauvegarder les notes -->
-        <button id="save-notes">Sauvegarder les notes</button>
-    </div>
-
-    <!-- Sous-bloc Objectifs -->
-    <div class="objectifs">
-        <h2>Objectifs en cours</h2>
-        <div id="objectif-content"></div>
-    </div>
-
-    <!-- Sous-bloc pour les formulaires -->
-    <div class="formulaires">
-        <div class="form-section">
-            <h3>Ajouter un Objectif</h3>
-            <form id="add-objectif-form">
-                <label for="participant-objectif">Participant :</label>
-                <select id="participant-objectif" required>
-                    <option value="eric">Eric</option>
-                    <option value="jezabel">Jezabel</option>
-                </select>
-
-                <label for="titre-objectif">Titre :</label>
-                <input type="text" id="titre-objectif" placeholder="Titre de l'objectif" required>
-
-                <label for="description-objectif">Description :</label>
-                <textarea id="description-objectif" rows="3" placeholder="Description de l'objectif" required></textarea>
-
-                <label for="progression-objectif">Progression :</label>
-                <input type="number" id="progression-objectif" min="0" max="100" value="0" required>
-
-                <label for="deadline-objectif">Deadline :</label>
-                <input type="date" id="deadline-objectif" required>
-
-                <button type="submit">Ajouter Objectif</button>
-            </form>
+        <!-- Sélection du participant et de la session -->
+        <div class="coaching-select">
+            <label for="participant-select">Participant :</label>
+            <select id="participant-select">
+                <option value="eric">Eric</option>
+                <option value="jezabel">Jezabel</option>
+            </select>
         </div>
-        <div class="form-section">
-            <h3>Ajouter une Session</h3>
-            <form id="add-session-form">
-                <label for="participant-session">Participant :</label>
-                <select id="participant-session" required>
-                    <option value="eric">Eric</option>
-                    <option value="jezabel">Jezabel</option>
-                </select>
 
-                <label for="lieu-session">Lieu :</label>
-                <input type="text" id="lieu-session" placeholder="Lieu de la session" required>
-
-                <label for="date-session">Date :</label>
-                <input type="date" id="date-session" required>
-
-                <label for="notes-session">Notes :</label>
-                <textarea id="notes-session" rows="3" placeholder="Notes de la session"></textarea>
-
-                <button type="submit">Ajouter Session</button>
-            </form>
+        <div class="coaching-select">
+            <label for="date-select">Date de session :</label>
+            <select id="date-select"></select>
         </div>
-    </div>
 
+        <!-- Prise de notes -->
+        <div class="note-editor card">
+            <h2>Prise de notes</h2>
+            <textarea id="notes-textarea" rows="10" placeholder="Vos notes ici..."></textarea>
+            <button id="save-notes">Sauvegarder les notes</button>
+        </div>
 
-    <!-- Sous-bloc pour la navigation -->
-    <div class="nav">
-        <a class="nav-btn" href="index.html">Dashboard</a>
-        <a class="nav-btn" href="progression.html">Progression</a>
-    </div>
-    
-</main>
+        <!-- Objectifs en cours -->
+        <section class="objectifs">
+            <h2>Objectifs en cours</h2>
+            <div id="objectif-content" class="objectif-content"></div>
+        </section>
 
-<footer>
-    <p>© 2024 L'écho des rêves</p>
-</footer>
+        <!-- Formulaires -->
+        <div class="formulaires">
+            <div class="form-section card">
+                <h3>Ajouter un Objectif</h3>
+                <form id="add-objectif-form">
+                    <label for="participant-objectif">Participant :</label>
+                    <select id="participant-objectif" required>
+                        <option value="eric">Eric</option>
+                        <option value="jezabel">Jezabel</option>
+                    </select>
+                    <label for="titre-objectif">Titre :</label>
+                    <input type="text" id="titre-objectif" required>
+                    <label for="description-objectif">Description :</label>
+                    <textarea id="description-objectif" rows="3" required></textarea>
+                    <label for="progression-objectif">Progression :</label>
+                    <input type="number" id="progression-objectif" min="0" max="100" value="0" required>
+                    <label for="deadline-objectif">Deadline :</label>
+                    <input type="date" id="deadline-objectif" required>
+                    <button type="submit">Ajouter Objectif</button>
+                </form>
+            </div>
+
+            <div class="form-section card">
+                <h3>Ajouter une Session</h3>
+                <form id="add-session-form">
+                    <label for="participant-session">Participant :</label>
+                    <select id="participant-session" required>
+                        <option value="eric">Eric</option>
+                        <option value="jezabel">Jezabel</option>
+                    </select>
+                    <label for="lieu-session">Lieu :</label>
+                    <input type="text" id="lieu-session" required>
+                    <label for="date-session">Date :</label>
+                    <input type="date" id="date-session" required>
+                    <label for="notes-session">Notes :</label>
+                    <textarea id="notes-session" rows="3"></textarea>
+                    <button type="submit">Ajouter Session</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2024 L'écho des rêves</p>
+    </footer>
+
     <!-- Scripts pour Firebase -->
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
@@ -114,5 +100,4 @@
     <script src="js/loadFicheCoaching.js"></script>
     <script src="js/coachingForms.js"></script>
 </body>
-
 </html>

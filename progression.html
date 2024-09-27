@@ -11,15 +11,26 @@
 
 <body>
     <header>
-        <h1>Progression des objectifs</h1>
+        <a href="index.html"><h1>L'écho des rêves</h1></a>
     </header>
+    
+
 
     <main>
+    <!-- Navigation bar -->
+    <div class="nav">
+        <a class="nav-btn" href="index.html">Dashboard</a>
+        <a class="nav-btn" href="coaching.html">Coaching</a>
+        <a class="nav-btn" href="progression.html">Progression</a>
+    </div>
+    <!-- Main section with tabs for Eric and Jezabel -->
+
         <div class="tabs">
             <button class="tab-btn" onclick="openTab(event, 'eric')">Eric</button>
             <button class="tab-btn" onclick="openTab(event, 'jezabel')">Jezabel</button>
         </div>
 
+        <!-- Content for Eric's objectives -->
         <div id="eric" class="tab-content">
             <section class="objectifs-eric">
                 <h2>Objectifs atteints d'Eric</h2>
@@ -27,29 +38,24 @@
             </section>
         </div>
 
+        <!-- Content for Jezabel's objectives -->
         <div id="jezabel" class="tab-content">
             <section class="objectifs-jezabel">
                 <h2>Objectifs atteints de Jezabel</h2>
                 <div class="objectif-content-jezabel"></div>
             </section>
         </div>
+    </main>
 
+    <footer>
+        <p>© 2024 L'écho des rêves</p>
+    </footer>
 
-    <!-- Sous-bloc pour la navigation -->
-    <div class="nav">
-        <a class="nav-btn" href="index.html">Dashboard</a>
-        <a class="nav-btn" href="coaching.html">Coaching</a>
-    </div>
-    
-</main>
-
-<footer>
-    <p>© 2024 L'écho des rêves</p>
-</footer>    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <!-- Firebase and JavaScript -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
 
     <script src="js/firebaseConfig.js"></script>
-
     <script src="js/progression.js"></script>
 </body>
 
