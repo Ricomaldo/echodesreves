@@ -7,7 +7,7 @@ $text-color: #333;
 $highlight-color: #FFD54F;
 $secondary-bg: #ffffff; // Background for nav and cards
 
-$iphone-12-width: 380x; // Largeur spécifique pour iPhone 12
+$iphone-12-width: 390px; // Largeur spécifique pour iPhone 12
 
 // Header
 header {
@@ -28,6 +28,7 @@ header {
     }
 }
 
+// Body styling
 body {
     font-family: 'Roboto', sans-serif;
     font-weight: 400;
@@ -39,27 +40,32 @@ body {
     flex-direction: column;
     align-items: center;
     max-width: 100%; // Empêche de dépasser la largeur de l'écran
+
+    @media screen and (max-width: $iphone-12-width) {
+        padding: 10px;
+    }
 }
 
 h1, h2 {
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
 }
-// Pour centrer les titres et appliquer la couleur d'accentuation
+
+// Centrer et styliser les titres
 h2 {
-    text-align: center;      // Centrer les titres
-    color: $accent-color;    // Appliquer la couleur d'accentuation
-    font-size: 1.8rem;       // Ajuster la taille des titres si nécessaire
-    margin-bottom: 20px;     // Espacement sous le titre
+    text-align: center;
+    color: $accent-color;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
 }
 
-// Pour les sous-titres spécifiques (comme "Objectifs d'Eric")
 h3 {
-    text-align: center;      // Centrer les sous-titres
-    color: $main-color;    // Appliquer la couleur d'accentuation
-    font-size: 1.5rem;       // Ajuster la taille des sous-titres
-    margin-bottom: 15px;     // Espacement sous les sous-titres
+    text-align: center;
+    color: $main-color;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
 }
+
 // Barre de navigation
 .nav {
     display: flex;
@@ -91,9 +97,11 @@ h3 {
         }
     }
 
+    // Forcer l’alignement horizontal même sur iPhone 12
     @media screen and (max-width: $iphone-12-width) {
-        flex-direction: column;
-        align-items: center;
+        flex-direction: row; // Reste en ligne même sur petit écran
+        flex-wrap: nowrap;
+        justify-content: space-between;
         gap: 10px;
     }
 }
@@ -123,10 +131,8 @@ h3 {
             border-color: $accent-color;
             color: white;
         }
-    }
 
-    @media screen and (max-width: $iphone-12-width) {
-        .tab-btn {
+        @media screen and (max-width: $iphone-12-width) {
             padding: 8px 16px; // Réduire la taille sur mobile
             font-size: 0.9rem; // Ajuster la taille de la police
         }
@@ -154,8 +160,8 @@ h3 {
 // Note editor
 .note-editor {
     display: flex;
-    flex-direction: column; // Garder les éléments en colonne
-    align-items: center;    // Centrer le bouton et les autres éléments
+    flex-direction: column;
+    align-items: center;
     margin: 20px 0;
     padding: 20px;
     background-color: $secondary-bg;
@@ -197,14 +203,13 @@ h3 {
 
 // Notes content
 .notes-content {
-    text-align: justify;  // Justifier le texte
-    max-height: 140px;  // Limite de hauteur
-    overflow-y: auto;  // Barre de défilement si le contenu dépasse
-    padding: 10px;  // Ajouter du padding pour rendre la lecture agréable
-    border: 1px solid $neutral-color;  // Délimiter visuellement la zone de notes
-    line-height: 1.6;  // Espacement entre les lignes pour faciliter la lecture
+    text-align: justify;
+    max-height: 140px;
+    overflow-y: auto;
+    padding: 10px;
+    border: 1px solid $neutral-color;
+    line-height: 1.6;
 }
-
 
 // Carte des sessions et objectifs
 .card, .session-card, .objectif-card {
@@ -213,28 +218,41 @@ h3 {
     border-radius: 8px;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
-    max-width: 100%; // Assure que ça ne dépasse pas la largeur de l'écran
+    width: 100%; // S'assurer que la largeur ne dépasse pas
+    max-width: 100%; // Limite la largeur maximale à 100%
+    box-sizing: border-box; // Inclure le padding et les bordures dans la taille totale
+    overflow: hidden; // Empêcher le débordement
 
     @media screen and (max-width: $iphone-12-width) {
         padding: 10px;
+        width: 100%; // Toujours pleine largeur sur petit écran
     }
 
     h3 {
-        margin-top: 5px; // Réduit l'espace au-dessus du titre
-        margin-bottom: 10px; // Espace sous le titre
+        margin-top: 5px;
+        margin-bottom: 10px;
         font-size: 1.4rem;
     }
 
     p {
-        margin-bottom: 15px; // Espacement sous les paragraphes
+        margin-bottom: 15px;
     }
 }
 
-// Objectifs en cours (spécifique à la page Coaching)
+// Bloc parent
+.parent-container {
+    width: 100%; // S'assurer que le parent prend bien toute la largeur
+    max-width: 1000px; // Limiter la largeur sur les grands écrans
+    overflow: hidden; // Empêcher les enfants de dépasser
+    box-sizing: border-box;
+    margin: 0 auto; // Centrer le bloc parent
+}
+
+// Objectif card specific layout
 .objectif-card {
     display: flex;
     flex-direction: column;
-    gap: 10px; // Espace entre les éléments à l'intérieur de la carte
+    gap: 10px;
 }
 
 // Barre de progression
@@ -252,31 +270,28 @@ input[type="range"] {
         opacity: 1;
     }
 
-    // Style pour le curseur
     &::-webkit-slider-thumb, &::-moz-range-thumb {
         width: 20px;
         height: 20px;
-        background: $main-color; // Couleur par défaut du curseur
+        background: $main-color;
         cursor: pointer;
         border-radius: 50%;
         transition: background 0.3s ease;
     }
 
-    // Style pour une progression de 100%
     &.completed {
-        background: $highlight-color; // Changement de couleur lorsque la barre est complète
+        background: $highlight-color;
 
         &::-webkit-slider-thumb, &::-moz-range-thumb {
-            background: $highlight-color; // Changement de couleur du curseur à 100%
+            background: $highlight-color;
         }
     }
 }
 
-// Style pour le conteneur d'étoiles (centré)
+// Conteneur d'étoiles (centré)
 .star-line {
     display: flex;
     justify-content: center;
-    flex-wrap: wrap;
     gap: 5px;
     margin-bottom: 20px;
 }
@@ -285,34 +300,30 @@ input[type="range"] {
     font-size: 1.5rem;
 }
 
-// Media queries pour l'iPhone 12 et écrans plus petits
+// Media queries pour iPhone 12
 @media screen and (max-width: $iphone-12-width) {
-    body {
-        padding: 10px;
-    }
-
     .nav-btn, .tab-btn, .note-editor, .card, .session-card {
-        width: 100%; // S'assurer que tout est à 100% de la largeur
-        max-width: 100%; // Limite la taille maximale à 100%
+        width: 100%;
+        max-width: 100%;
     }
 }
 
-// Centrage global pour les blocs
+// Centrage global des blocs
 main, .tabs, .tab-content, .note-editor {
     max-width: 1000px;
-    margin: 0 auto; // Centrer les éléments
+    margin: 0 auto;
 }
 
-// Centrer le label et le select du bloc "Date de session"
+// Centrage des menus déroulants et labels
 .coaching-select {
     display: flex;
     flex-direction: column;
-    align-items: center;  // Centrer horizontalement
-    margin: 20px 0;       // Espacement en haut et en bas
+    align-items: center;
+    margin: 20px 0;
 
     label {
-        font-size: 1.2rem; // Ajuster la taille de la police du label
-        margin-bottom: 10px; // Espacement sous le label
+        font-size: 1.2rem;
+        margin-bottom: 10px;
     }
 
     select {
@@ -320,7 +331,7 @@ main, .tabs, .tab-content, .note-editor {
         font-size: 1rem;
         border-radius: 4px;
         border: 1px solid $neutral-color;
-        width: 200px;      // Ajuste la largeur du select
-        text-align: center; // Centre le texte du select
+        width: 200px;
+        text-align: center;
     }
 }

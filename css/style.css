@@ -26,6 +26,11 @@ body {
   align-items: center;
   max-width: 100%;
 }
+@media screen and (max-width: 390px) {
+  body {
+    padding: 10px;
+  }
+}
 
 h1, h2 {
   font-family: "Montserrat", sans-serif;
@@ -73,10 +78,11 @@ h3 {
 .nav .nav-btn:active {
   background-color: #f29000;
 }
-@media screen and (max-width: 380x) {
+@media screen and (max-width: 390px) {
   .nav {
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
     gap: 10px;
   }
 }
@@ -104,7 +110,7 @@ h3 {
   border-color: #FFA726;
   color: white;
 }
-@media screen and (max-width: 380x) {
+@media screen and (max-width: 390px) {
   .tabs .tab-btn {
     padding: 8px 16px;
     font-size: 0.9rem;
@@ -122,7 +128,7 @@ h3 {
 .tab-content.active {
   display: block;
 }
-@media screen and (max-width: 380x) {
+@media screen and (max-width: 390px) {
   .tab-content {
     padding: 10px;
   }
@@ -159,7 +165,7 @@ h3 {
 .note-editor button:hover {
   background-color: #014141;
 }
-@media screen and (max-width: 380x) {
+@media screen and (max-width: 390px) {
   .note-editor {
     padding: 15px;
   }
@@ -183,11 +189,15 @@ h3 {
   border-radius: 8px;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
+  width: 100%;
   max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
 }
-@media screen and (max-width: 380x) {
+@media screen and (max-width: 390px) {
   .card, .session-card, .objectif-card {
     padding: 10px;
+    width: 100%;
   }
 }
 .card h3, .session-card h3, .objectif-card h3 {
@@ -197,6 +207,14 @@ h3 {
 }
 .card p, .session-card p, .objectif-card p {
   margin-bottom: 15px;
+}
+
+.parent-container {
+  width: 100%;
+  max-width: 1000px;
+  overflow: hidden;
+  box-sizing: border-box;
+  margin: 0 auto;
 }
 
 .objectif-card {
@@ -236,7 +254,6 @@ input[type=range].completed::-webkit-slider-thumb, input[type=range].completed::
 .star-line {
   display: flex;
   justify-content: center;
-  flex-wrap: wrap;
   gap: 5px;
   margin-bottom: 20px;
 }
@@ -245,10 +262,7 @@ input[type=range].completed::-webkit-slider-thumb, input[type=range].completed::
   font-size: 1.5rem;
 }
 
-@media screen and (max-width: 380x) {
-  body {
-    padding: 10px;
-  }
+@media screen and (max-width: 390px) {
   .nav-btn, .tab-btn, .note-editor, .card, .session-card {
     width: 100%;
     max-width: 100%;
