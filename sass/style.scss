@@ -100,6 +100,9 @@ h3 {
         &:active {
             background-color: darken($accent-color, 10%);
         }
+        @media screen and (max-width: $iphone-12-width) {
+            padding: 12px 12px;
+        }
     }
 
     // Forcer l’alignement horizontal même sur iPhone 12
@@ -107,9 +110,7 @@ h3 {
         flex-direction: row; // Reste en ligne même sur petit écran
         flex-wrap: nowrap;
         justify-content: space-between;
-        gap: 10px;
-        padding: 0px;
-        font-size:0.9em;
+        font-size:1em;
 
     }
 }

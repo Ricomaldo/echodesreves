@@ -85,13 +85,16 @@ h3 {
   background-color: #02a4a4;
 }
 @media screen and (max-width: 390px) {
+  .nav .nav-btn {
+    padding: 12px 12px;
+  }
+}
+@media screen and (max-width: 390px) {
   .nav {
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-between;
-    gap: 10px;
-    padding: 0px;
-    font-size: 0.9em;
+    font-size: 1em;
   }
 }
 
