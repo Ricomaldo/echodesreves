@@ -32,6 +32,11 @@ body {
   align-items: center;
   max-width: 100%;
 }
+@media screen and (max-width: 390px) {
+  body {
+    padding: 10px;
+  }
+}
 
 h1, h2 {
   font-family: "Montserrat", sans-serif;
