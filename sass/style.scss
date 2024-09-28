@@ -18,7 +18,7 @@ $iphone-12-width: 390px; // Largeur spécifique pour iPhone 12
 // Header
 header {
     text-align: center;
-    padding: 20px;
+    padding: 12px 20px;
     background-color: $main-color;
     color: $background-color;
     border-radius: 8px;
@@ -102,6 +102,7 @@ h3 {
         }
         @media screen and (max-width: $iphone-12-width) {
             padding: 12px 12px;
+            font-size:0.9em;
         }
     }
 
@@ -110,7 +111,6 @@ h3 {
         flex-direction: row; // Reste en ligne même sur petit écran
         flex-wrap: nowrap;
         justify-content: space-between;
-        font-size:1em;
 
     }
 }

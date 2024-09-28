@@ -6,7 +6,7 @@
 
 header {
   text-align: center;
-  padding: 20px;
+  padding: 12px 20px;
   background-color: #017374;
   color: #F5F5F5;
   border-radius: 8px;
@@ -87,6 +87,7 @@ h3 {
 @media screen and (max-width: 390px) {
   .nav .nav-btn {
     padding: 12px 12px;
+    font-size: 0.9em;
   }
 }
 @media screen and (max-width: 390px) {
@@ -94,7 +95,6 @@ h3 {
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-between;
-    font-size: 1em;
   }
 }
 
