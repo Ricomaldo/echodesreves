@@ -1,133 +1,285 @@
-// Variables
-$main-color: #017374;
-$accent-color: #FFA726;
-$background-color: #F5F5F5;
-$neutral-color: #E0E0E0;
-$text-color: #333;
-$highlight-color: #FFD54F;
-$secondary-bg: #ffffff; // Background for nav and cards
+body {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  background-color: #F5F5F5;
+  color: #333;
+  padding: 20px;
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 100%;
+}
 
-// Header
 header {
-    text-align: center;
-    padding: 20px;
-    background-color: $main-color;
-    color: $background-color;
-    border-radius: 8px;
-
-    h1 {
-        font-size: 1.8rem;
-        margin: 0;
-    }
-
-    a {
-        text-decoration: none;
-        color: $background-color;
-    }
+  text-align: center;
+  padding: 20px;
+  background-color: #017374;
+  color: #F5F5F5;
+  border-radius: 8px;
+}
+header h1 {
+  font-size: 1.8rem;
+  margin: 0;
 }
 
-// Barre de navigation
+h1, h2 {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+}
+
+h2 {
+  text-align: center;
+  color: #02d7d7;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+}
+
+h3 {
+  text-align: center;
+  color: #017374;
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+
 .nav {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin: 15px 0;
-
-    .nav-btn {
-        background-color: $secondary-bg;
-        color: $main-color;
-        font-weight: bold;
-        padding: 12px 20px;
-        border-radius: 8px;
-        border: 1px solid $main-color;
-        transition: background-color 0.3s ease, color 0.3s ease;
-        text-align: center;
-        width: auto;
-        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-
-        &:hover, &:focus {
-            background-color: $accent-color;
-            color: $secondary-bg;
-            outline: none;
-        }
-
-        &:active {
-            background-color: darken($accent-color, 10%);
-        }
-    }
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 15px;
 }
-
-// Onglets
-.tabs {
-    display: flex;
-    justify-content: center;
-    margin: 20px 0 0;
+.nav .nav-btn {
+  background-color: #ffffff;
+  color: #017374;
+  font-weight: bold;
+  padding: 12px 20px;
+  border-radius: 8px;
+  border: 1px solid #017374;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  text-align: center;
+  width: auto;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+}
+.nav .nav-btn:hover, .nav .nav-btn:focus {
+  background-color: #02d7d7;
+  color: #ffffff;
+  outline: none;
+}
+.nav .nav-btn:active {
+  background-color: #02a4a4;
+}
+@media screen and (max-width: 390px) {
+  .nav {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
     gap: 10px;
-
-    .tab-btn {
-        background-color: $main-color;
-        color: white;
-        padding: 12px 20px;
-        border-radius: 8px 8px 0 0;
-        border: 1px solid $main-color;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-
-        &:hover {
-            background-color: darken($main-color, 10%);
-        }
-
-        &.active {
-            background-color: $accent-color;
-            border-color: $accent-color;
-            color: white;
-        }
-    }
+  }
 }
 
-// Contenu des onglets
+.tabs {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0 0;
+  gap: 10px;
+}
+.tabs .tab-btn {
+  background-color: #017374;
+  color: white;
+  padding: 10px 20px;
+  font-size: 1.5em;
+  font-weight: bold;
+  border-radius: 8px 8px 0 0;
+  border: 1px solid #017374;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.tabs .tab-btn:hover {
+  background-color: #014141;
+}
+.tabs .tab-btn.active {
+  background-color: #02d7d7;
+  border-color: #02d7d7;
+  color: white;
+}
+@media screen and (max-width: 390px) {
+  .tabs .tab-btn {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+}
+
 .tab-content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 0 8px 8px 8px;
-    border: 1px solid $main-color;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-    display: none;
-
-    &.active {
-        display: block;
-    }
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px 8px 8px 8px;
+  border: 1px solid #017374;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  display: none;
+}
+.tab-content.active {
+  display: block;
+}
+@media screen and (max-width: 390px) {
+  .tab-content {
+    padding: 10px;
+  }
 }
 
-// Note editor
 .note-editor {
-    margin: 20px 0;
-    padding: 20px;
-    background-color: $secondary-bg;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-
-    textarea {
-        width: 100%;
-        min-height: 120px;
-        padding: 10px;
-        border: 1px solid $neutral-color;
-        border-radius: 4px;
-        resize: none;
-    }
-
-    button {
-        margin-top: 15px;
-        padding: 10px 20px;
-        background-color: $main-color;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-
-        &:hover {
-            background-color: darken($main-color, 10%);
-        }
-    }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px 0;
+  padding: 20px;
+  background-color: #ffffff;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
 }
+.note-editor textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: 10px;
+  border: 1px solid #E0E0E0;
+  border-radius: 4px;
+  resize: none;
+  pointer-events: auto;
+  text-align: justify;
+  max-height: 140px;
+  overflow-y: auto;
+  line-height: 1.6;
+  font-size: 1.5em;
+}
+.note-editor button {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background-color: #017374;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.note-editor button:hover {
+  background-color: #014141;
+}
+@media screen and (max-width: 390px) {
+  .note-editor {
+    padding: 15px;
+  }
+  .note-editor textarea {
+    min-height: 100px;
+  }
+}
+
+.card, .session-card, .objectif-card {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+@media screen and (max-width: 390px) {
+  .card, .session-card, .objectif-card {
+    padding: 10px;
+    width: 100%;
+  }
+}
+.card h3, .session-card h3, .objectif-card h3 {
+  margin-top: 5px;
+  margin-bottom: 10px;
+  font-size: 1.4rem;
+}
+.card p, .session-card p, .objectif-card p {
+  margin-bottom: 15px;
+}
+
+.parent-container {
+  width: 100%;
+  max-width: 1000px;
+  overflow: hidden;
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+
+.objectif-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+input[type=range] {
+  width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 8px;
+  background: #E0E0E0;
+  outline: none;
+  opacity: 0.7;
+  transition: opacity 0.2s, background-color 0.3s ease;
+}
+input[type=range]:hover {
+  opacity: 1;
+}
+input[type=range]::-webkit-slider-thumb, input[type=range]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: #017374;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: background 0.3s ease;
+}
+input[type=range].completed {
+  background: #FFD54F;
+}
+input[type=range].completed::-webkit-slider-thumb, input[type=range].completed::-moz-range-thumb {
+  background: #FFD54F;
+}
+
+.star-line {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin-bottom: 20px;
+}
+
+.star-line span {
+  font-size: 1.5rem;
+}
+
+@media screen and (max-width: 390px) {
+  .nav-btn, .tab-btn, .note-editor, .card, .session-card {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+main, .tabs, .tab-content, .note-editor {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.coaching-select {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px 0;
+}
+.coaching-select label {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+.coaching-select select {
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 4px;
+  border: 1px solid #E0E0E0;
+  width: 200px;
+  text-align: center;
+}
+
+/*# sourceMappingURL=style.css.map */

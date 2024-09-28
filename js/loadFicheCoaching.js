@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Fonction pour charger les notes
-    function chargerNotes(participant, dateSelect, notesContent) {
+    function chargerNotes(participant, dateSelect, notesTextarea) {
         const sessionId = dateSelect.value;
         if (!sessionId) return;
 
@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const sessionData = doc.data();
 
                 // Injecter les notes directement dans le div avec la classe 'notes-content'
-                notesContent.innerHTML = sessionData.notes || "";
+                notesTextarea.value = sessionData.notes || "";
             } else {
                 console.log(`Aucune donnée trouvée pour la session sélectionnée : ${sessionId}`);
             }
@@ -137,12 +137,11 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     }
 
-    // Fonction pour sauvegarder les notes
-    function sauvegarderNotes(participant, dateSelect, notesContent) {
+    function sauvegarderNotes(participant, dateSelect, notesTextarea) {
         const sessionId = dateSelect.value;
         if (!sessionId) return;
-
-        const notes = notesContent.textContent; // Récupérer le contenu du div
+    
+        const notes = notesTextarea.value; // Utiliser `.value` pour le contenu d'un textarea
         db.collection("Sessions").doc(sessionId).update({
             notes: notes
         }).then(() => {
@@ -151,6 +150,7 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error(`Erreur lors de la mise à jour des notes pour ${participant} :`, error);
         });
     }
+    
 
     // Gestion des onglets
     document.querySelectorAll(".tab-btn").forEach(button => {

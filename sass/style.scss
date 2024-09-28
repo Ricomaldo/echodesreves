@@ -1,6 +1,6 @@
 // Variables
 $main-color: #017374;
-$accent-color: #FFA726;
+$accent-color: #02d7d7;
 $background-color: #F5F5F5;
 $neutral-color: #E0E0E0;
 $text-color: #333;
@@ -41,17 +41,17 @@ body {
     align-items: center;
     max-width: 100%; // Empêche de dépasser la largeur de l'écran
 
-    @media screen and (max-width: $iphone-12-width) {
-        padding: 10px;
-    }
+    // @media screen and (max-width: $iphone-12-width) {
+    //     padding: 10px;
+    // }
 }
 
+// Titles
 h1, h2 {
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
 }
 
-// Centrer et styliser les titres
 h2 {
     text-align: center;
     color: $accent-color;
@@ -121,6 +121,8 @@ h3 {
         border: 1px solid $main-color;
         cursor: pointer;
         transition: background-color 0.3s ease;
+        font-size: 1.5em;
+        font-weight:bold;
 
         &:hover {
             background-color: darken($main-color, 10%);
@@ -134,7 +136,7 @@ h3 {
 
         @media screen and (max-width: $iphone-12-width) {
             padding: 8px 16px; // Réduire la taille sur mobile
-            font-size: 0.9rem; // Ajuster la taille de la police
+            font-size: 1.5rem; // Ajuster la taille de la police
         }
     }
 }
@@ -174,6 +176,10 @@ h3 {
         padding: 10px;
         border: 1px solid $neutral-color;
         border-radius: 4px;
+        font-size:1.6em;
+        text-align:justify;
+        font-family: 'Dancing Script', cursive;
+        font-weight: 500;
         resize: none;
     }
 

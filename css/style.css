@@ -26,11 +26,6 @@ body {
   align-items: center;
   max-width: 100%;
 }
-@media screen and (max-width: 390px) {
-  body {
-    padding: 10px;
-  }
-}
 
 h1, h2 {
   font-family: "Montserrat", sans-serif;
@@ -39,7 +34,7 @@ h1, h2 {
 
 h2 {
   text-align: center;
-  color: #FFA726;
+  color: #02d7d7;
   font-size: 1.8rem;
   margin-bottom: 20px;
 }
@@ -71,12 +66,12 @@ h3 {
   text-decoration: none;
 }
 .nav .nav-btn:hover, .nav .nav-btn:focus {
-  background-color: #FFA726;
+  background-color: #02d7d7;
   color: #ffffff;
   outline: none;
 }
 .nav .nav-btn:active {
-  background-color: #f29000;
+  background-color: #02a4a4;
 }
 @media screen and (max-width: 390px) {
   .nav {
@@ -101,19 +96,21 @@ h3 {
   border: 1px solid #017374;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  font-size: 1.5em;
+  font-weight: bold;
 }
 .tabs .tab-btn:hover {
   background-color: #014141;
 }
 .tabs .tab-btn.active {
-  background-color: #FFA726;
-  border-color: #FFA726;
+  background-color: #02d7d7;
+  border-color: #02d7d7;
   color: white;
 }
 @media screen and (max-width: 390px) {
   .tabs .tab-btn {
     padding: 8px 16px;
-    font-size: 0.9rem;
+    font-size: 1.5rem;
   }
 }
 
@@ -150,6 +147,10 @@ h3 {
   padding: 10px;
   border: 1px solid #E0E0E0;
   border-radius: 4px;
+  font-size: 1.6em;
+  text-align: justify;
+  font-family: "Dancing Script", cursive;
+  font-weight: 500;
   resize: none;
 }
 .note-editor button {
