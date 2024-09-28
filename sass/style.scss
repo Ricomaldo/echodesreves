@@ -46,7 +46,6 @@ body {
     flex-direction: column;
     align-items: center;
     max-width: 100%; // Empêche de dépasser la largeur de l'écran
-
     @media screen and (max-width: $iphone-12-width) {
         padding: 10px;
     }
@@ -109,6 +108,9 @@ h3 {
         flex-wrap: nowrap;
         justify-content: space-between;
         gap: 10px;
+        padding: 0px;
+        font-size:0.9em;
+
     }
 }
 
@@ -141,7 +143,7 @@ h3 {
         }
 
         @media screen and (max-width: $iphone-12-width) {
-            padding: 8px 16px; // Réduire la taille sur mobile
+            padding: 8px; // Réduire la taille sur mobile
             font-size: 1.5rem; // Ajuster la taille de la police
         }
     }
