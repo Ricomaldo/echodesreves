@@ -9,6 +9,12 @@ $secondary-bg: #ffffff; // Background for nav and cards
 
 $iphone-12-width: 390px; // Largeur spécifique pour iPhone 12
 
+* {
+    margin: 0;
+    scroll-behavior: smooth;
+    padding: 0;
+}
+
 // Header
 header {
     text-align: center;
