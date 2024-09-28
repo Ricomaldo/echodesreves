@@ -193,6 +193,11 @@ h3 {
   padding: 10px;
   border: 1px solid #E0E0E0;
   line-height: 1.6;
+  font-size: 1.5em;
+  text-align: justify;
+  font-family: "Dancing Script", cursive;
+  font-weight: 500;
+  resize: none;
 }
 
 .card, .session-card, .objectif-card {
