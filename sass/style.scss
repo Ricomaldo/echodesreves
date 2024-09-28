@@ -46,9 +46,9 @@ body {
     flex-direction: column;
     align-items: center;
     max-width: 100%; // Empêche de dépasser la largeur de l'écran
-    @media screen and (max-width: $iphone-12-width) {
-        padding: 10px;
-    }
+    // @media screen and (max-width: $iphone-12-width) {
+    //     padding: 10px;
+    // }
 }
 
 // Titles
@@ -101,18 +101,11 @@ h3 {
             background-color: darken($accent-color, 10%);
         }
         @media screen and (max-width: $iphone-12-width) {
-            padding: 12px 12px;
-            font-size:0.9em;
+            padding: 12px 20px;
+            
         }
     }
 
-    // Forcer l’alignement horizontal même sur iPhone 12
-    @media screen and (max-width: $iphone-12-width) {
-        flex-direction: row; // Reste en ligne même sur petit écran
-        flex-wrap: nowrap;
-        justify-content: space-between;
-
-    }
 }
 
 // Onglets

@@ -32,11 +32,6 @@ body {
   align-items: center;
   max-width: 100%;
 }
-@media screen and (max-width: 390px) {
-  body {
-    padding: 10px;
-  }
-}
 
 h1, h2 {
   font-family: "Montserrat", sans-serif;
@@ -86,15 +81,7 @@ h3 {
 }
 @media screen and (max-width: 390px) {
   .nav .nav-btn {
-    padding: 12px 12px;
-    font-size: 0.9em;
-  }
-}
-@media screen and (max-width: 390px) {
-  .nav {
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-between;
+    padding: 12px 20px;
   }
 }
 
