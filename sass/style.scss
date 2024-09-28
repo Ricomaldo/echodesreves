@@ -46,10 +46,13 @@ body {
     flex-direction: column;
     align-items: center;
     max-width: 100%; // Empêche de dépasser la largeur de l'écran
-    // @media screen and (max-width: $iphone-12-width) {
-    //     padding: 10px;
-    // }
 }
+
+@media screen and (max-width: 390px) {
+    main {
+      padding: 10px;
+    }
+  }
 
 // Titles
 h1, h2 {
@@ -101,7 +104,7 @@ h3 {
             background-color: darken($accent-color, 10%);
         }
         @media screen and (max-width: $iphone-12-width) {
-            padding: 12px 20px;
+            padding: 12px 12px;
             
         }
     }

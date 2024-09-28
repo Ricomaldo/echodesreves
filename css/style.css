@@ -33,6 +33,11 @@ body {
   max-width: 100%;
 }
 
+@media screen and (max-width: 390px) {
+  main {
+    padding: 10px;
+  }
+}
 h1, h2 {
   font-family: "Montserrat", sans-serif;
   font-weight: 700;
@@ -81,7 +86,7 @@ h3 {
 }
 @media screen and (max-width: 390px) {
   .nav .nav-btn {
-    padding: 12px 20px;
+    padding: 12px 12px;
   }
 }
 
