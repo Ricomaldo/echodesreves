@@ -12,6 +12,7 @@ $iphone-12-width: 390px; // Largeur spécifique pour iPhone 12
 * {
     margin: 0;
     scroll-behavior: smooth;
+    box-sizing: border-box;
     padding: 0;
 }
 
@@ -48,7 +49,7 @@ body {
     max-width: 100%; // Empêche de dépasser la largeur de l'écran
 }
 
-@media screen and (max-width: 390px) {
+@media screen and (max-width: $iphone-12-width) {
     main {
       padding: 10px;
     }
