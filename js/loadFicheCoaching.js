@@ -161,8 +161,8 @@ document.addEventListener('DOMContentLoaded', function () {
             const notesContent = document.getElementById(`notes-textarea-${participant}`);
             const objectifContent = document.getElementById(`objectif-content-${participant}`);
 
-            chargerDates(participant, dateSelect, notesContent);
             chargerObjectifs(participant, objectifContent);
+            chargerDates(participant, dateSelect, notesContent);
         });
     });
 
