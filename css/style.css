@@ -27,7 +27,6 @@ body {
   font-weight: 400;
   background-color: #F5F5F5;
   color: #333;
-  padding: 10px;
   line-height: 1.6;
   display: flex;
   flex-direction: column;
@@ -180,7 +179,7 @@ h3 {
 .note-editor button {
   margin-top: 15px;
   padding: 10px 20px;
-  background-color: #017374;
+  background-color: #02d7d7;
   color: white;
   border: none;
   border-radius: 8px;
