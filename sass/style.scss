@@ -25,14 +25,15 @@ $iphone-12-width: 390px; // Largeur spécifique pour iPhone 12
 // Header
 header {
     text-align: center;
-    padding: 12px 20px;
-    background-color: $main-color;
-    color: $background-color;
-    border-radius: 8px;
+    margin-bottom: 10px;
 
     h1 {
         font-size: 1.8rem;
-        margin: 0;
+        background-color: $main-color;
+        color: $background-color;
+        border-radius: 8px;
+        padding: 20px;
+        width:370px;
     }
 
     a {
@@ -66,7 +67,7 @@ h1, h2, h3 {
 }
 
 h2 {
-    color: $main-color;
+    color: $text-color;
     font-size: 1.8rem;
 }
 
@@ -78,10 +79,9 @@ h3 {
 // Barre de navigation
 .nav {
     display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin: 15px 0;
-
+    justify-content: space-between;
+    margin-bottom: 10px;
+    width : 370px;
     .nav-btn {
         background-color: $secondary-bg;
         color: $main-color;
@@ -91,7 +91,7 @@ h3 {
         border: 1px solid $main-color;
         transition: background-color 0.3s ease, color 0.3s ease;
         text-align: center;
-        width: auto;
+        width: 110px;
         box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
         text-decoration: none;
 
@@ -115,8 +115,8 @@ h3 {
 .tabs {
     display: flex;
     justify-content: center;
-    margin: 20px 0;
-    gap: 10px;
+    margin-top: 10px;
+    gap: 20px;
 
     .tab-btn {
         background-color: white;
@@ -153,6 +153,7 @@ h3 {
         @media screen and (max-width: $iphone-12-width) {
             padding: 8px 16px;  // Ajuster le padding pour le mobile
             font-size: 1.3rem;  // Taille de police ajustée pour mobile
+            width:100%;
         }
     }
 }
@@ -213,7 +214,7 @@ h3 {
     button {
         margin-top: 15px;
         padding: 10px 20px;
-        background-color: $accent-color;
+        background-color: $main-color;
         color: white;
         border: none;
         border-radius: 8px;
@@ -221,7 +222,7 @@ h3 {
         transition: background-color 0.3s ease;
 
         &:hover {
-            background-color: darken($main-color, 10%);
+            background-color: darken($accent-color, 10%);
         }
     }
 }

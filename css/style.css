@@ -9,14 +9,15 @@
 
 header {
   text-align: center;
-  padding: 12px 20px;
-  background-color: #017374;
-  color: #F5F5F5;
-  border-radius: 8px;
+  margin-bottom: 10px;
 }
 header h1 {
   font-size: 1.8rem;
-  margin: 0;
+  background-color: #017374;
+  color: #F5F5F5;
+  border-radius: 8px;
+  padding: 20px;
+  width: 370px;
 }
 header a {
   text-decoration: none;
@@ -47,7 +48,7 @@ h1, h2, h3 {
 }
 
 h2 {
-  color: #017374;
+  color: #333;
   font-size: 1.8rem;
 }
 
@@ -58,9 +59,9 @@ h3 {
 
 .nav {
   display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin: 15px 0;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  width: 370px;
 }
 .nav .nav-btn {
   background-color: #ffffff;
@@ -71,7 +72,7 @@ h3 {
   border: 1px solid #017374;
   transition: background-color 0.3s ease, color 0.3s ease;
   text-align: center;
-  width: auto;
+  width: 110px;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
   text-decoration: none;
 }
@@ -92,8 +93,8 @@ h3 {
 .tabs {
   display: flex;
   justify-content: center;
-  margin: 20px 0;
-  gap: 10px;
+  margin-top: 10px;
+  gap: 20px;
 }
 .tabs .tab-btn {
   background-color: white;
@@ -127,6 +128,7 @@ h3 {
   .tabs .tab-btn {
     padding: 8px 16px;
     font-size: 1.3rem;
+    width: 100%;
   }
 }
 
@@ -181,7 +183,7 @@ h3 {
 .note-editor button {
   margin-top: 15px;
   padding: 10px 20px;
-  background-color: #02d7d7;
+  background-color: #017374;
   color: white;
   border: none;
   border-radius: 8px;
@@ -189,7 +191,7 @@ h3 {
   transition: background-color 0.3s ease;
 }
 .note-editor button:hover {
-  background-color: #014141;
+  background-color: #02a4a4;
 }
 
 .notes-content {
