@@ -1,5 +1,4 @@
 * {
-  margin: 0;
   scroll-behavior: smooth;
   box-sizing: border-box;
   padding: 0;
@@ -28,30 +27,32 @@ body {
   font-weight: 400;
   background-color: #F5F5F5;
   color: #333;
+  padding: 10px;
   line-height: 1.6;
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 100%;
+}
+@media screen and (max-width: 390px) {
+  body {
+    max-width: 370px;
+  }
 }
 
-h1, h2 {
+h1, h2, h3 {
   font-family: "Montserrat", sans-serif;
   font-weight: 700;
+  text-align: center;
 }
 
 h2 {
-  text-align: center;
-  color: #02d7d7;
+  color: #017374;
   font-size: 1.8rem;
-  margin-bottom: 20px;
 }
 
 h3 {
-  text-align: center;
   color: #017374;
   font-size: 1.5rem;
-  margin-bottom: 15px;
 }
 
 .nav {
@@ -90,17 +91,18 @@ h3 {
 .tabs {
   display: flex;
   justify-content: center;
-  margin: 20px 0 0;
+  margin: 20px 0;
   gap: 10px;
 }
 .tabs .tab-btn {
-  background-color: #017374;
-  color: white;
+  background-color: white;
+  color: #017374;
   padding: 10px 20px;
   border-radius: 8px 8px 0 0;
   border: 1px solid #017374;
+  border-bottom: 0;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
   font-size: 1.5em;
   font-weight: bold;
 }
@@ -112,23 +114,40 @@ h3 {
   border-color: #02d7d7;
   color: white;
 }
+.tabs .tab-btn.eric-active {
+  background-color: #409fff;
+  border-color: #409fff;
+}
+.tabs .tab-btn.jezabel-active {
+  background-color: #9f40ff;
+  border-color: #9f40ff;
+}
 @media screen and (max-width: 390px) {
   .tabs .tab-btn {
-    padding: 8px;
-    font-size: 1.5rem;
+    padding: 8px 16px;
+    font-size: 1.3rem;
   }
 }
 
 .tab-content {
   background-color: white;
   padding: 20px;
-  border-radius: 0 8px 8px 8px;
-  border: 1px solid #017374;
+  border-radius: 8px;
+  border: 1px solid #02d7d7;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
   display: none;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 .tab-content.active {
   display: block;
+}
+.tab-content.eric-selected {
+  border-color: #409fff;
+  background-color: #c6e2ff;
+}
+.tab-content.jezabel-selected {
+  border-color: #9f40ff;
+  background-color: #ecd9ff;
 }
 @media screen and (max-width: 390px) {
   .tab-content {
@@ -171,67 +190,34 @@ h3 {
 .note-editor button:hover {
   background-color: #014141;
 }
-@media screen and (max-width: 390px) {
-  .note-editor {
-    padding: 15px;
-  }
-  .note-editor textarea {
-    min-height: 100px;
-  }
-}
 
 .notes-content {
   text-align: justify;
-  max-height: 140px;
-  overflow-y: auto;
-  padding: 10px;
   border: 1px solid #E0E0E0;
   line-height: 1.6;
-  font-size: 1.5em;
+  font-size: 1.4em;
   text-align: justify;
   font-family: "Dancing Script", cursive;
   font-weight: 500;
   resize: none;
+  max-height: 140px;
+  overflow-y: auto;
+  padding: 5px;
 }
 
 .card, .session-card, .objectif-card {
   background-color: white;
-  padding: 20px;
+  padding: 10px;
   border-radius: 8px;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
-  width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
-  overflow: hidden;
-}
-@media screen and (max-width: 390px) {
-  .card, .session-card, .objectif-card {
-    padding: 10px;
-    width: 100%;
-  }
-}
-.card h3, .session-card h3, .objectif-card h3 {
-  margin-top: 5px;
-  margin-bottom: 10px;
-  font-size: 1.4rem;
+  margin: 20px 0;
 }
 .card p, .session-card p, .objectif-card p {
-  margin-bottom: 15px;
+  padding: 0 20px;
 }
 
-.parent-container {
-  width: 100%;
-  max-width: 1000px;
-  overflow: hidden;
-  box-sizing: border-box;
-  margin: 0 auto;
-}
-
-.objectif-card {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+.objectif-content {
+  text-align: center;
 }
 
 input[type=range] {
@@ -250,7 +236,7 @@ input[type=range]:hover {
 input[type=range]::-webkit-slider-thumb, input[type=range]::-moz-range-thumb {
   width: 20px;
   height: 20px;
-  background: #017374;
+  background: #02d7d7;
   cursor: pointer;
   border-radius: 50%;
   transition: background 0.3s ease;
@@ -269,16 +255,6 @@ input[type=range].completed::-webkit-slider-thumb, input[type=range].completed::
   margin-bottom: 20px;
 }
 
-.star-line span {
-  font-size: 1.5rem;
-}
-
-@media screen and (max-width: 390px) {
-  .nav-btn, .tab-btn, .note-editor, .card, .session-card {
-    width: 100%;
-    max-width: 100%;
-  }
-}
 main, .tabs, .tab-content, .note-editor {
   max-width: 1000px;
   margin: 0 auto;

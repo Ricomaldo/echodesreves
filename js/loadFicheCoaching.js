@@ -33,15 +33,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 // Ajouter les sessions au menu déroulant
                 sessions.forEach((session, index) => {
                     const sessionDate = session.date.seconds * 1000;
-
-                    if (sessionDate <= today) {
-                        lastPastSessionIndex = index;
-                    }
-
+            
                     const option = document.createElement('option');
                     option.value = session.id;
                     option.textContent = new Date(sessionDate).toLocaleDateString();
                     dateSelect.appendChild(option);
+                });
+            
+                // Ajout du gestionnaire d'événements pour le changement de date
+                dateSelect.addEventListener('change', function() {
+                    chargerNotes(participant, dateSelect, notesContent);
                 });
 
                 // Sélectionner la dernière session passée

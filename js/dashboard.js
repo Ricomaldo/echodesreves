@@ -1,3 +1,4 @@
+// Fonction pour charger les dernières sessions du participant
 function chargerDernieresSessions(participant) {
     const sessionContent = participant === "eric" ? document.getElementById('eric-session-content') : document.getElementById('jezabel-session-content');
     sessionContent.innerHTML = ''; // Réinitialiser le contenu
@@ -69,6 +70,7 @@ function chargerDernieresSessions(participant) {
         });
 }
 
+// Fonction pour charger les objectifs en cours du participant
 function chargerObjectifsEnCours(participant) {
     const objectifContent = participant === "eric" ? document.getElementById('eric-objectif-content') : document.getElementById('jezabel-objectif-content');
     objectifContent.innerHTML = ''; // Réinitialiser le contenu
@@ -104,8 +106,8 @@ function chargerObjectifsEnCours(participant) {
                     // Remplir la carte avec les informations de l'objectif
                     objectifCard.innerHTML = `
                         <h3>${objectif.titre}</h3>
-                        <p style="font-size: 0.9em;">${objectif.description}</p>
-                        <p>Échéance: ${new Date(objectif.deadline.seconds * 1000).toLocaleDateString('fr-FR', { month: 'short', year: 'numeric' })}</p>
+                        <p style="padding: 0 20px;text-align:left;"> ${objectif.description}</p>
+                        <p style="font-size: 0.9em;">Échéance : ${new Date(objectif.deadline.seconds * 1000).toLocaleDateString('fr-FR', { month: 'short', year: 'numeric' })}</p>
                     `;
 
                     // Ajouter l'input range à la carte

@@ -1,3 +1,4 @@
+// Fonction pour gérer l'ouverture des onglets et appliquer les couleurs en fonction de la sélection
 function openTab(evt, person) {
     // Cacher toutes les tab-content
     var tabContents = document.getElementsByClassName("tab-content");
@@ -8,12 +9,21 @@ function openTab(evt, person) {
     // Retirer la classe active de tous les boutons
     var tabButtons = document.getElementsByClassName("tab-btn");
     for (var i = 0; i < tabButtons.length; i++) {
-        tabButtons[i].classList.remove("active");
+        tabButtons[i].classList.remove("active", "eric-active", "jezabel-active");
     }
 
-    // Afficher le contenu de l'onglet actuel et ajouter la classe active au bouton correspondant
+    // Afficher le contenu de l'onglet sélectionné
     document.getElementById(person).style.display = "block";
     evt.currentTarget.classList.add("active");
+
+    // Appliquer la classe de couleur en fonction du participant sélectionné
+    if (person === 'eric') {
+        evt.currentTarget.classList.add('eric-active');  // Changement de couleur du bouton
+        document.getElementById(person).classList.add('eric-selected');  // Changement de couleur du bloc
+    } else if (person === 'jezabel') {
+        evt.currentTarget.classList.add('jezabel-active');  // Changement de couleur du bouton
+        document.getElementById(person).classList.add('jezabel-selected');  // Changement de couleur du bloc
+    }
 
     // Sauvegarder l'onglet sélectionné dans le localStorage
     localStorage.setItem('activeTab', person);
@@ -23,7 +33,7 @@ function openTab(evt, person) {
 document.addEventListener("DOMContentLoaded", function() {
     var activeTab = localStorage.getItem('activeTab');
     
-    // Si aucun onglet n'est sauvegardé, on affiche le premier par défaut
+    // Si aucun onglet n'est sauvegardé, on affiche Eric par défaut
     if (!activeTab) {
         activeTab = 'eric';  // Par défaut l'onglet d'Eric
     }

@@ -8,31 +8,28 @@
     <link rel="icon" type="image/png" href="images/logo/plume_favicon.png">
     <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
-
 </head>
 
 <body>
     <header>
         <a href="index.html"><h1>L'écho des rêves</h1></a>
     </header>
-    
-
 
     <main>
-    <!-- Navigation bar -->
-    <div class="nav">
-        <a class="nav-btn" href="index.html">Dashboard</a>
-        <a class="nav-btn" href="coaching.html">Coaching</a>
-        <a class="nav-btn" href="progression.html">Progression</a>
-    </div>
-    <!-- Main section with tabs for Eric and Jezabel -->
-
-        <div class="tabs">
-            <button class="tab-btn" onclick="openTab(event, 'eric')">Eric</button>
-            <button class="tab-btn" onclick="openTab(event, 'jezabel')">Jezabel</button>
+        <!-- Barre de navigation -->
+        <div class="nav">
+            <a class="nav-btn" href="index.html">Dashboard</a>
+            <a class="nav-btn" href="coaching.html">Coaching</a>
+            <a class="nav-btn" href="progression.html">Progression</a>
         </div>
 
-        <!-- Content for Eric's objectives -->
+        <!-- Onglets pour Jezabel et Eric -->
+        <div class="tabs">
+            <button class="tab-btn" onclick="openTab(event, 'jezabel')">Jezabel</button>
+            <button class="tab-btn" onclick="openTab(event, 'eric')">Eric</button>
+        </div>
+
+        <!-- Objectifs atteints d'Eric -->
         <div id="eric" class="tab-content">
             <section class="objectifs-eric">
                 <h2>Objectifs atteints d'Eric</h2>
@@ -40,7 +37,7 @@
             </section>
         </div>
 
-        <!-- Content for Jezabel's objectives -->
+        <!-- Objectifs atteints de Jezabel -->
         <div id="jezabel" class="tab-content">
             <section class="objectifs-jezabel">
                 <h2>Objectifs atteints de Jezabel</h2>
@@ -53,12 +50,12 @@
         <p>© 2024 L'écho des rêves</p>
     </footer>
 
-    <!-- Firebase and JavaScript -->
+    <!-- Firebase et scripts JavaScript -->
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
-
     <script src="js/firebaseConfig.js"></script>
     <script src="js/progression.js"></script>
+    <script src="js/opentab.js"></script>
 </body>
 
 </html>

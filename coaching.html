@@ -22,12 +22,17 @@
         </div>
     
         <div class="tabs">
-            <button class="tab-btn" onclick="openTab(event, 'eric')">Eric</button>
             <button class="tab-btn" onclick="openTab(event, 'jezabel')">Jezabel</button>
+            <button class="tab-btn" onclick="openTab(event, 'eric')">Eric</button>
         </div>
     
         <div id="eric" class="tab-content">
             <!-- Contenu pour Eric (Objectifs, Sessions, etc.) -->
+            <div class="objectifs-eric">
+                <h2>Objectifs en cours</h2>
+                <div id="objectif-content-eric" class="objectif-content"></div>
+            </div>
+
             <div class="coaching-select">
                 <label for="date-select-eric">Date de session :</label>
                 <select id="date-select-eric"></select>
@@ -39,14 +44,16 @@
                 <button id="save-notes-eric">Sauvegarder les notes</button>
             </div>
          
-            <div class="objectifs-eric">
-                <h2>Objectifs en cours</h2>
-                <div id="objectif-content-eric"></div>
-            </div>
+
         </div>
     
         <div id="jezabel" class="tab-content">
             <!-- Contenu pour Jezabel (Objectifs, Sessions, etc.) -->
+            <div class="objectifs-jezabel">
+                <h2>Objectifs en cours</h2>
+                <div id="objectif-content-jezabel" class="objectif-content"></div>
+            </div>
+
             <div class="coaching-select">
                 <label for="date-select-jezabel">Date de session :</label>
                 <select id="date-select-jezabel"></select>
@@ -58,10 +65,7 @@
                 <button id="save-notes-jezabel">Sauvegarder les notes</button>
             </div>
 
-            <div class="objectifs-jezabel">
-                <h2>Objectifs en cours</h2>
-                <div id="objectif-content-jezabel"></div>
-            </div>
+
         </div>
     </main>
 

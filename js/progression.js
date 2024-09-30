@@ -24,9 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     querySnapshot.forEach(doc => {
                         const objectif = doc.data();
-
-                        // Tableau pour abréger les mois en français
-                        const moisCourts = ["jan.", "fév.", "mars", "avr.", "mai", "juin", "juil.", "août", "sept", "oct.", "nov.", "déc."];
+                        const moisCourts = ["jan.", "fév.", "mars", "avr.", "mai", "juin", "juil.", "août", "sept.", "oct.", "nov.", "déc."];
 
                         // Créer une carte pour chaque objectif
                         const objectifCard = document.createElement('div');
@@ -44,33 +42,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     }
 
-    // Appeler la fonction pour charger les objectifs atteints d'Eric et de Jezabel
+    // Charger les objectifs atteints d'Eric et de Jezabel
     chargerObjectifsAtteints('eric', objectifContentEric);
     chargerObjectifsAtteints('jezabel', objectifContentJezabel);
-});
-
-// Gestion des onglets
-function openTab(evt, person) {
-    var i, tabContent, tabButtons;
-
-    // Cacher toutes les tab-content
-    tabContent = document.getElementsByClassName("tab-content");
-    for (i = 0; i < tabContent.length; i++) {
-        tabContent[i].style.display = "none";
-    }
-
-    // Enlever la classe "active" de tous les boutons
-    tabButtons = document.getElementsByClassName("tab-btn");
-    for (i = 0; i < tabButtons.length; i++) {
-        tabButtons[i].classList.remove("active");
-    }
-
-    // Afficher l'onglet actif et ajouter la classe "active" au bouton
-    document.getElementById(person).style.display = "block";
-    evt.currentTarget.classList.add("active");
-}
-
-// Initialisation : afficher le premier onglet par défaut
-document.addEventListener('DOMContentLoaded', function() {
-    document.querySelector(".tab-btn").click();
 });
