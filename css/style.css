@@ -19,8 +19,13 @@ header h1 {
   color: #F5F5F5;
   border-radius: 8px;
   padding: 20px;
-  min-width: 355px;
+  min-width: 370px;
   width: 100%;
+}
+@media screen and (max-width: 375px) {
+  header h1 {
+    min-width: 355px;
+  }
 }
 header a {
   text-decoration: none;
@@ -41,11 +46,15 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 355px;
 }
 @media screen and (max-width: 390px) {
   body {
-    max-width: 355px;
+    min-width: 370px;
+  }
+}
+@media screen and (max-width: 375px) {
+  body {
+    min-width: 355px;
   }
 }
 
@@ -70,9 +79,14 @@ h3 {
   justify-content: space-between;
   gap: 10px;
   margin-bottom: 10px;
-  min-width: 355px;
+  min-width: 370px;
   width: 100%;
   max-width: 1000px;
+}
+@media screen and (max-width: 375px) {
+  .nav {
+    min-width: 355px;
+  }
 }
 .nav .nav-btn {
   background-color: #ffffff;
