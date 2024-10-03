@@ -37,7 +37,9 @@ footer {
 }
 
 body {
-  margin: 10px;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 10px;
   font-family: "Roboto", sans-serif;
   font-weight: 400;
   background-color: #F5F5F5;

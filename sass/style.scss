@@ -51,7 +51,9 @@ header {
 footer {margin-top:20px;}
 // Body styling
 body {
-    margin:10px;
+    max-width: 1000px; // Limiter la largeur maximale du contenu
+    margin: 0 auto; // Centre automatiquement le contenu
+    padding: 10px; // Ajouter du padding pour l'espacement
     font-family: 'Roboto', sans-serif;
     font-weight: 400;
     background-color: $background-color;
