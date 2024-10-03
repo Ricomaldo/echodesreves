@@ -45,4 +45,30 @@ document.addEventListener('DOMContentLoaded', function () {
     // Charger les objectifs atteints d'Eric et de Jezabel
     chargerObjectifsAtteints('eric', objectifContentEric);
     chargerObjectifsAtteints('jezabel', objectifContentJezabel);
+
+    // Fonction pour ajouter un Objectif
+    document.getElementById('add-objectif-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const titre = document.getElementById('objectif-titre').value;
+        const description = document.getElementById('objectif-description').value;
+        const deadline = document.getElementById('objectif-deadline').value;
+
+        // Identifier l'onglet actif (soit 'eric', soit 'jezabel')
+        const participant = localStorage.getItem('activeTab') || 'eric';
+
+        db.collection('Objectifs').add({
+            participant: participant,
+            titre: titre,
+            description: description,
+            progression: 0, // Nouvel objectif, donc progression à 0
+            deadline: new Date(deadline)
+        }).then(() => {
+            alert('Objectif ajouté avec succès');
+            document.getElementById('add-objectif-form').reset();
+        }).catch(error => {
+            console.error('Erreur lors de l\'ajout de l\'objectif : ', error);
+        });
+    });
+
 });

@@ -65,9 +65,26 @@
                 <textarea id="notes-textarea-jezabel" rows="10" placeholder="Vos notes ici..."></textarea>
                 <button id="save-notes-jezabel">Sauvegarder les notes</button>
             </div>
-
-
         </div>
+        
+        <div id="toast" class="toast">Notes sauvegardées avec succès !</div>
+
+        <!-- Formulaire pour ajouter une session -->
+        <section class="form-section">
+            <h2>Ajouter une session</h2>
+            <form id="add-session-form">
+                <div class="form-group">
+                    <label for="session-date">Date de la session :</label>
+                    <input type="date" id="session-date" name="date" required>
+                </div>
+                <div class="form-group">
+                    <label for="session-notes">Vigilance à avoir d'ici là ?</label>
+                    <textarea id="session-notes" name="notes" rows="4" placeholder="Notes ici..." required></textarea>
+                </div>
+                <button type="submit">Ajouter la session</button>
+            </form>
+        </section>
+
     </main>
 
     <footer>

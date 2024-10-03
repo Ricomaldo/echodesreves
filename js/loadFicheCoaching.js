@@ -1,8 +1,9 @@
 document.addEventListener('DOMContentLoaded', function () {
+    const db = firebase.firestore();
     const today = new Date().setHours(0, 0, 0, 0); // Date du jour sans heure
 
     // Fonction pour charger les dates des sessions
-    function chargerDates(participant, dateSelect, notesContent) {
+    function chargerSessions(participant, dateSelect, notesContent) {
         console.log(`Participant sélectionné : ${participant}`);
 
         // Réinitialiser le contenu du sélecteur de dates pour éviter les doublons
@@ -14,16 +15,18 @@ document.addEventListener('DOMContentLoaded', function () {
             .get()
             .then(querySnapshot => {
                 let sessions = [];
-                let uniqueSessions = {}; // Utiliser un objet pour éviter les doublons
                 let lastPastSessionIndex = -1;
 
-                querySnapshot.forEach((doc) => {
+                querySnapshot.forEach((doc, index) => {
                     const session = doc.data();
                     const sessionDate = session.date.seconds * 1000;
 
-                    if (!uniqueSessions[doc.id]) {
-                        uniqueSessions[doc.id] = true;
-                        sessions.push({ ...session, id: doc.id });
+                    // Pousser la session dans le tableau
+                    sessions.push({ ...session, id: doc.id });
+
+                    // Si la session est passée par rapport à aujourd'hui, on la note
+                    if (sessionDate <= today) {
+                        lastPastSessionIndex = index;
                     }
                 });
 
@@ -33,13 +36,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 // Ajouter les sessions au menu déroulant
                 sessions.forEach((session, index) => {
                     const sessionDate = session.date.seconds * 1000;
-            
                     const option = document.createElement('option');
                     option.value = session.id;
                     option.textContent = new Date(sessionDate).toLocaleDateString();
                     dateSelect.appendChild(option);
                 });
-            
+
                 // Ajout du gestionnaire d'événements pour le changement de date
                 dateSelect.addEventListener('change', function() {
                     chargerNotes(participant, dateSelect, notesContent);
@@ -53,7 +55,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     dateSelect.selectedIndex = 0;
                     chargerNotes(participant, dateSelect, notesContent);
                 }
-            }).catch(error => {
+            })
+            .catch(error => {
                 console.error(`Erreur lors du chargement des sessions pour ${participant} :`, error);
             });
     }
@@ -66,8 +69,6 @@ document.addEventListener('DOMContentLoaded', function () {
         db.collection("Sessions").doc(sessionId).get().then((doc) => {
             if (doc.exists) {
                 const sessionData = doc.data();
-
-                // Injecter les notes directement dans le div avec la classe 'notes-content'
                 notesTextarea.value = sessionData.notes || "";
             } else {
                 console.log(`Aucune donnée trouvée pour la session sélectionnée : ${sessionId}`);
@@ -76,6 +77,37 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error(`Erreur lors du chargement des notes pour ${participant} :`, error);
         });
     }
+
+    // Fonction pour ajouter une session
+    document.getElementById('add-session-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const date = document.getElementById('session-date').value;
+        const notes = document.getElementById('session-notes').value;
+
+        // Identifier le participant à partir de l'onglet actif
+        const participant = localStorage.getItem('activeTab') || 'eric';  // Par défaut "eric" si rien n'est sélectionné
+        
+        // Ajouter la session dans Firestore
+        db.collection('Sessions').add({
+            participant: participant,
+            date: new Date(date),
+            notes: notes
+        }).then(() => {
+            // Afficher un message de succès
+            const toast = document.getElementById("toast");
+            toast.textContent = 'Session ajoutée avec succès!';
+            toast.classList.add("show");
+            setTimeout(() => { 
+                toast.classList.remove("show"); 
+            }, 3000); // Le toast disparaît après 3 secondes
+            
+            // Réinitialiser le formulaire après soumission
+            document.getElementById('add-session-form').reset();
+        }).catch(error => {
+            console.error('Erreur lors de l\'ajout de la session : ', error);
+        });
+    });
 
     // Fonction pour charger les objectifs
     function chargerObjectifs(participant, objectifContent) {
@@ -138,31 +170,38 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     }
 
+    // Fonction pour sauvegarder les notes avec popup de confirmation
     function sauvegarderNotes(participant, dateSelect, notesTextarea) {
         const sessionId = dateSelect.value;
         if (!sessionId) return;
-    
-        const notes = notesTextarea.value; // Utiliser `.value` pour le contenu d'un textarea
+
+        const notes = notesTextarea.value;
         db.collection("Sessions").doc(sessionId).update({
             notes: notes
         }).then(() => {
-            console.log(`Notes mises à jour pour ${participant} !`);
+            // Afficher le toast après la sauvegarde des notes
+            const toast = document.getElementById("toast-notes");
+            toast.classList.add("show");
+            setTimeout(() => { 
+                toast.classList.remove("show"); 
+            }, 3000); // Le toast disparaît après 3 secondes
         }).catch(error => {
             console.error(`Erreur lors de la mise à jour des notes pour ${participant} :`, error);
         });
     }
-    
 
     // Gestion des onglets
     document.querySelectorAll(".tab-btn").forEach(button => {
         button.addEventListener('click', function(event) {
             const participant = event.target.textContent.toLowerCase();
+            localStorage.setItem('activeTab', participant);  // Sauvegarder l'onglet actif dans localStorage
             const dateSelect = document.getElementById(`date-select-${participant}`);
             const notesContent = document.getElementById(`notes-textarea-${participant}`);
             const objectifContent = document.getElementById(`objectif-content-${participant}`);
 
+            // Appeler les fonctions pour charger les données du participant actif
             chargerObjectifs(participant, objectifContent);
-            chargerDates(participant, dateSelect, notesContent);
+            chargerSessions(participant, dateSelect, notesContent);
         });
     });
 
@@ -175,4 +214,8 @@ document.addEventListener('DOMContentLoaded', function () {
             sauvegarderNotes(participant, dateSelect, notesContent);
         });
     });
+
+    // Charger par défaut les données d'Eric à l'ouverture de la page
+    const activeTab = localStorage.getItem('activeTab') || 'eric';
+    document.querySelector(`button[onclick*="${activeTab}"]`).click();
 });

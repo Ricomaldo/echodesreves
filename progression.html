@@ -43,6 +43,28 @@
                 <div class="objectif-content-jezabel"></div>
             </section>
         </div>
+
+        <!-- Formulaire pour ajouter un objectif -->
+        <section class="form-section">
+            <h2>Ajouter un objectif</h2>
+            <form id="add-objectif-form">
+                <div class="form-group">
+                    <label for="objectif-titre">Titre :</label>
+                    <input type="text" id="objectif-titre" name="objectif-titre" required>
+                </div>
+                <div class="form-group">
+                    <label for="objectif-description">Description :</label>
+                    <textarea id="objectif-description" name="objectif-description" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="objectif-deadline">Date limite :</label>
+                    <input type="date" id="objectif-deadline" name="objectif-deadline" required>
+                </div>
+                <button type="submit">Ajouter l'objectif</button>
+            </form>
+        </section>
+
+
     </main>
 
     <footer>

@@ -22,7 +22,7 @@ $iphone-12-width: 390px; // Largeur spécifique pour iPhone 12
     -moz-osx-font-smoothing: grayscale;
 }
 
-// Header
+// Header & footer
 header {
     text-align: center;
     margin-bottom: 10px;
@@ -36,7 +36,7 @@ header {
         color: $background-color;
         border-radius: 8px;
         padding: 20px;
-        min-width:370px;
+        min-width:355px;
         width:100%;
     }
 
@@ -45,7 +45,7 @@ header {
         color: $background-color;
     }
 }
-
+footer {margin-top:20px;}
 // Body styling
 body {
     margin:10px;
@@ -57,9 +57,9 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-width:370px;
+    min-width:355px;
     @media screen and (max-width: $iphone-12-width) {
-        max-width: 370px;
+        max-width: 355px;
     }
 }
 
@@ -84,9 +84,9 @@ h3 {
 .nav {
     display: flex;
     justify-content: space-between;
-    gap:20px;
+    gap:10px;
     margin-bottom: 10px;
-    min-width : 370px;
+    min-width : 355px;
     width:100%;
     max-width:1000px;
 
@@ -115,7 +115,8 @@ h3 {
         }
 
         @media screen and (max-width: $iphone-12-width) {
-            padding: 12px 12px;
+            padding: 12px 0px;
+            font-size:0.9em;
         }
     }
 }
@@ -125,7 +126,7 @@ h3 {
     display: flex;
     justify-content: center;
     margin-top: 10px;
-    gap: 20px;
+    gap: 10px;
 
     .tab-btn {
         background-color: white;
@@ -138,7 +139,7 @@ h3 {
         transition: background-color 0.3s ease, border-color 0.3s ease;
         font-size: 1.5em;
         font-weight: bold;
-        min-width:175px;
+        min-width:170px;
         
         &:hover {
             background-color: darken($main-color, 10%);
@@ -163,7 +164,8 @@ h3 {
         @media screen and (max-width: $iphone-12-width) {
             padding: 8px 16px;  // Ajuster le padding pour le mobile
             font-size: 1.3rem;  // Taille de police ajustée pour mobile
-            width:100%;
+            width:100%;    justify-content: space-between;
+
         }
     }
 }
@@ -342,4 +344,73 @@ main, .tabs, .tab-content, .note-editor {
         width: 200px;
         text-align: center;
     }
+}
+
+// Style pour les formulaires
+.form-section {
+    background-color: $secondary-bg;
+    padding: 20px;
+    margin-top: 20px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+
+    label {
+        display: block;
+        font-size: 1.2em;
+        margin-bottom: 5px;
+    }
+
+    input, select, textarea {
+        width: 100%;
+        padding: 10px;
+        border-radius: 4px;
+        border: 1px solid $neutral-color;
+    }
+
+    textarea {
+        resize: vertical;
+        min-height: 80px;
+    }
+}
+
+button[type="submit"] {
+    background-color: $main-color;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+        background-color: darken($main-color, 10%);
+    }
+}
+
+
+.toast {
+    visibility: hidden;
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 4px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    bottom: 30px;
+    font-size: 17px;
+    opacity: 0;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.toast.show {
+    visibility: visible;
+    opacity: 1;
 }

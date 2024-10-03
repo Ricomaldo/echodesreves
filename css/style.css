@@ -19,12 +19,16 @@ header h1 {
   color: #F5F5F5;
   border-radius: 8px;
   padding: 20px;
-  min-width: 370px;
+  min-width: 355px;
   width: 100%;
 }
 header a {
   text-decoration: none;
   color: #F5F5F5;
+}
+
+footer {
+  margin-top: 20px;
 }
 
 body {
@@ -37,11 +41,11 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 370px;
+  min-width: 355px;
 }
 @media screen and (max-width: 390px) {
   body {
-    max-width: 370px;
+    max-width: 355px;
   }
 }
 
@@ -64,9 +68,9 @@ h3 {
 .nav {
   display: flex;
   justify-content: space-between;
-  gap: 20px;
+  gap: 10px;
   margin-bottom: 10px;
-  min-width: 370px;
+  min-width: 355px;
   width: 100%;
   max-width: 1000px;
 }
@@ -94,7 +98,8 @@ h3 {
 }
 @media screen and (max-width: 390px) {
   .nav .nav-btn {
-    padding: 12px 12px;
+    padding: 12px 0px;
+    font-size: 0.9em;
   }
 }
 
@@ -102,7 +107,7 @@ h3 {
   display: flex;
   justify-content: center;
   margin-top: 10px;
-  gap: 20px;
+  gap: 10px;
 }
 .tabs .tab-btn {
   background-color: white;
@@ -115,7 +120,7 @@ h3 {
   transition: background-color 0.3s ease, border-color 0.3s ease;
   font-size: 1.5em;
   font-weight: bold;
-  min-width: 175px;
+  min-width: 170px;
 }
 .tabs .tab-btn:hover {
   background-color: #014141;
@@ -138,6 +143,7 @@ h3 {
     padding: 8px 16px;
     font-size: 1.3rem;
     width: 100%;
+    justify-content: space-between;
   }
 }
 
@@ -295,6 +301,69 @@ main, .tabs, .tab-content, .note-editor {
   border: 1px solid #E0E0E0;
   width: 200px;
   text-align: center;
+}
+
+.form-section {
+  background-color: #ffffff;
+  padding: 20px;
+  margin-top: 20px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+.form-group label {
+  display: block;
+  font-size: 1.2em;
+  margin-bottom: 5px;
+}
+.form-group input, .form-group select, .form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #E0E0E0;
+}
+.form-group textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+button[type=submit] {
+  background-color: #017374;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+button[type=submit]:hover {
+  background-color: #014141;
+}
+
+.toast {
+  visibility: hidden;
+  min-width: 250px;
+  margin-left: -125px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 4px;
+  padding: 16px;
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  bottom: 30px;
+  font-size: 17px;
+  opacity: 0;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.toast.show {
+  visibility: visible;
+  opacity: 1;
 }
 
 /*# sourceMappingURL=style.css.map */
